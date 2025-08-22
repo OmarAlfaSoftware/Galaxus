@@ -23,3 +23,13 @@ after we set a file that contains the offer, they review the files and apply the
 |             |             | **xlsx** | [Extended](TemplateFiles_E1E2E3_retail_ext_xlsx.zip?api=v2) |
 | **Merchant / EU-Hub** | **csv** | [Extended](Templatefiles_E1E2E3_marketplace_ext_csv.zip?api=v2) |
 |             |             | **xlsx** | [Extended](TemplateFiles_E1E2E3_marketplace_ext_xlsx.zip?api=v2) |
+
+
+
+the conclusion of first day:
+I knew that we work with files structure that we have some fixed structure for each stage,
+and also they some rules for the files content like columns and data,
+I can find it in Stage 1 file structure 
+and also we have some Images and files that help me to see how should my code take the products and set it and the offers and the media,
+
+remain read from Stage3.
