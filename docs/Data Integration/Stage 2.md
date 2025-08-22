@@ -1,40 +1,54 @@
 this file contain the details of what is Stage 2 and what its contains and its importance.
 
-Idea:
-start with the idea of stage 2:
-now after publish the products and set the offers in stage 1,
-now we need to improve these products by adding more details like colors,size ,the category or other details.
-so this step help the end customer to find the products and know more details about it so he can buy it.
+# Stage 2 Integration Data Structure
 
-the Images used in Stage 2 :
-we can add the data in diffrent type but we can find the possible structure in this image ["Image"]("../Images/Stage 2/Possible Files Structure.png")
-second the taric DB code form ["Image"]("../Images/Stage 2/taric DB.png")
+## Idea:
 
-Structure:
-we can add the data in diffrent type but we can find the possible structure in this image ["Image"]("../Images/Stage 2/Possible Files Structure.png")
+Start with the idea of Stage 2:
+Now after publishing the products and setting the offers in Stage 1, now we need to improve these products by adding more details like colors, size, the category, or other details.  
+So this step helps the end customer to find the products and know more details about it so he can buy it.
 
-each file has its own structure so lets take them one by one
+---
 
-first file is ProductData
-the naming of the file must be ProductData_[ProviderName].[FileFormat] Eg: ProductData_digitecgalaxus.csv
+## The Images Used in Stage 2:
 
-the file contains a lot of structures but some are mysterious like Category and Product Category:
-the website divide the Category into three sections like Category_1,Category_2,Category_3:
+We can add the data in different types but we can find the possible structure in this image ![Image](../Images/Stage 2/Possible Files Structure.png)  
+Second, the TARIC DB code form ![Image](../Images/Stage 2/taric DB.png)
+
+---
+
+## Structure:
+
+We can add the data in different types but we can find the possible structure in this image ![Image](../Images/Stage 2/Possible Files Structure.png)
+
+Each file has its own structure, so let's take them one by one.
+
+---
+
+### First File: ProductData
+
+The naming of the file must be `ProductData_[ProviderName].[FileFormat]`  
+Eg: `ProductData_digitecgalaxus.csv`
+
+The file contains a lot of structures but some are mysterious like Category and Product Category:  
+The website divides the Category into three sections like `Category_1`, `Category_2`, `Category_3`:
+
 |--Beauty & Health
 |----Health
 |------SportsFood
 
-so they divide by three level, for better filtraization its preferble to add more subCategories,
-also we have ProductCategory and this i think its Unique under all the Categories wih their diffrent level
-so its like Chiledren's Headphone, Building Blocks,..etc.
-you can find all of the categories in this file [Category]("../Files/20231101_Kategorien_DE_EN.xlsx")
+So they divide by three levels. For better filtration, it's preferable to add more subCategories.  
+Also, we have ProductCategory and this I think is unique under all the categories with their different levels,  
+so it’s like Children's Headphone, Building Blocks, etc.  
+You can find all of the categories in this file ![Category](../Files/20231101_Kategorien_DE_EN.xlsx)
 
-if there are a new category that not existed in this file they are review it and add it to their website
- 
+If there is a new category that doesn't exist in this file, they will review it and add it to their website.
 
+---
 
-Minimal certeria of ProductData
-# Product Data Table Description
+### Minimal Criteria of ProductData
+
+#### Product Data Table Description
 
 | **Header**            | **Data Type**               | **Designation**                          | **Description**                                                                                                                                                                                                                                                                                 |
 |-----------------------|-----------------------------|------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -51,6 +65,7 @@ Minimal certeria of ProductData
 ---
 
 ### Key Notes:
+
 - **ProviderKey**: Must be unique and should only include ASCII characters.
 - **Gtin**: EAN/GTIN codes should be globally valid and visible on the product's retail packaging.
 - **BrandName**: A valid brand name must be assigned to the product.
@@ -65,12 +80,15 @@ Minimal certeria of ProductData
 
 For further details on product categorization and data preparation, refer to the provided [guidelines on data quality](https://confdg.atlassian.net/wiki/spaces/PI/pages/168665885851).
 
-Supplementary criteria for product safety regulations: ProductData
-# Manufacturer Data Table
+---
+
+## Supplementary Criteria for Product Safety Regulations: ProductData
+
+### Manufacturer Data Table
 
 | **Header**           | **Data Type**               | **Designation**                               | **Description**                                                                                                                                                                                      |
 |----------------------|-----------------------------|-----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **GPSRNameAddress**   | `Str(300)`                  | Name and postal address of manufacturer       | The company name **and** the postal address of the manufacturer importing the product into the European Economic Area (EEA).  Format: `{name}, {street} {number}, {zip code} {town}, {country}`. |
+| **GPSRNameAddress**   | `Str(300)`                  | Name and postal address of manufacturer       | The company name **and** the postal address of the manufacturer importing the product into the European Economic Area (EEA). Format: `{name}, {street} {number}, {zip code} {town}, {country}`. |
 | **GPSREmailUrl**      | `Str(200)`                  | Email address or URL of the manufacturer      | The email address **or** URL of the manufacturer importing the product into the European Economic Area (EEA). The URLs must be accessible.                                                           |
 
 ---
@@ -81,6 +99,8 @@ Supplementary criteria for product safety regulations: ProductData
   
 - **GPSREmailUrl**: The email or URL of the manufacturer must be provided. Ensure that the email or URL is valid and accessible.
 
+---
+
 ### Examples:
 
 1. **GPSRNameAddress**  
@@ -89,8 +109,11 @@ Supplementary criteria for product safety regulations: ProductData
 2. **GPSREmailUrl**  
    Example: "info@mustermann.com" or "http://www.mustermann.com"
 
-Supplementary criteria for optimising data quality: ProductData
-# Product Data Table
+---
+
+## Supplementary Criteria for Optimising Data Quality: ProductData
+
+### Product Data Table
 
 | **Header**             | **Data Type**               | **Designation**                                | **Description**                                                                                                                                                                                                                                                                                                                                                                                                         |
 |------------------------|-----------------------------|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -131,12 +154,13 @@ Supplementary criteria for optimising data quality: ProductData
 
 - **Application_**: Details on the application of the product, required for some specific product groups by law, especially for products like medicines or medical devices.
 
+---
 
-now for Meida Data
+## Media Data
 
-NOTE:
-I think that the Images must be on web not local in the devices as they said that they are not count on their DB instead they count on Our DB,
-and because we the product are published so we can't set a local path images
+**Note:**  
+I think that the images must be on the web, not local in the devices, as they said that they are not counting on their DB, instead, they count on our DB,  
+and because the product is published, we can't set local path images.
 
 | **Header**                  | **Data type**   | **Designation**                        | **Description**                                                                                                                                                           |
 |-----------------------------|-----------------|----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -147,20 +171,3 @@ and because we the product are published so we can't set a local path images
 |                             |                 |                                        | **E.g.**: ProductLink_de_1, ProductLink_de_2, ProductLink_en_1, ProductLink_en_2, …                                                                                       |
 | **MainImageURL**            | Str(500)        | First image link (HTTPS)               | Cropped product image with white background, preferably frontal view. The longest edge of the images must be at least 600px (without border around the product). The size of 8 MB per image must not be exceeded. |
 | **ImageURL** _[index]       | Str(500)        | Additional image links (HTTPS)         | One link per column. The link must be freely accessible. JPG, JPEG and PNG are supported. The longest edge of the images must be at least 600px (without border around the product). The size of 8 MB per image must not be exceeded. |
-
-
-
-### Table 1: Product Link
-
-| **Header**            | **Data type**  | **Designation**                    | **Description**                                                                 |
-|-----------------------|----------------|-------------------------------------|---------------------------------------------------------------------------------|
-| **ProductLink**        | Str(300)       | Product links (HTTPS)               | One link per column. Product links can point to manufacturer pages, product reviews, etc. |
-| **Description**        |                |                                     | **Restrictions**: Links to resale platforms and other online shops are prohibited. "language" based on standard ISO 639-1. "index" for consecutive numbering for multiple URLs in the same language. Example: `ProductLink_de_1`, `ProductLink_en_1`, `ProductLink_en_2`. |
-
-### Table 2: Energy Label & Safety Data Sheet
-
-| **Header**           | **Data type** | **Designation**                              | **Description**                                                                 |
-|----------------------|---------------|----------------------------------------------|---------------------------------------------------------------------------------|
-| **EnergyLabel**       | Str(300)      | Energy label Image link (HTTPS)              | One link per column and indication of energy efficiency class. **Restrictions**: The link must be freely accessible. Supported formats: JPG, JPEG, PNG. |
-| **SafetyDataSheet**   | Str(300)      | Safety data sheet Document link (HTTPS)      | Product-specific safety data sheet. **Restrictions**: The link must be freely accessible. |
-

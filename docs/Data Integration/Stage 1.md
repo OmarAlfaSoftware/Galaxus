@@ -1,60 +1,74 @@
-this file contains how the data structued in stage 1 to start integrate with the company.
-these Images are related to Stage 1:
-1- In the excel we cant repeat columns or set spaces or new line like this Image [header]("../Images/Stage 1/column headers example.png")
-2- When Converting from CSV to EXCEL we should take care about number because it maybe look like this [ISSUE]("../Images/Stage 1/convert from csv to excel issue.png")
-3- when write a GTIN or number it maybe contain leading Zeroes so the excel will ignore them so need to tak care about it [Numbers]("../Images/Stage 1/leading zeroes in cells.png")
-4- we should not set empty lines in the sheet [emptyLines]("../Images/Stage 1//no empty lines.png")
-5- we should make the excel file contain only one tab(sheet) because any other tabs will be ignored [Tabs]("../Images/no other tabs.png")
-6- we should ensure the number are written in right format like this [Format]("../Images/Stage 1/number in excel must be in this format.png")
-7- there are possibles of files structure in stage one like this [structure]("../Images/Stage 1/Possible files structure in stage 1.png")
+#This file contains how the data structued in stage 1 to start integrate with the company.
 
+# Stage 1 Integration Data Structure
 
-first we have the offers:-
-to push an offer so we make a file contain at least:
-1- item number.
-2- price.
-3- stock.
-4- EAN/GTIN.
+These images are related to Stage 1:
 
-and for activate the products on the website we must create a file:
-1- product data
-2- price
-3- stock
-and better to divide them into three files like image in [Image]("'../Images/Stage 1/Possible files sructure in stage 1.png'")
+1. In the excel we cant repeat columns or set spaces or new line like this Image ![header](../Images/Stage 1/column headers example.png)
+2. When Converting from CSV to EXCEL we should take care about number because it maybe look like this ![ISSUE](../Images/Stage 1/convert from csv to excel issue.png)
+3. when write a GTIN or number it maybe contain leading Zeroes so the excel will ignore them so need to tak care about it ![Numbers](../Images/Stage 1/leading zeroes in cells.png)
+4. we should not set empty lines in the sheet ![emptyLines](../Images/Stage 1//no empty lines.png)
+5. we should make the excel file contain only one tab(sheet) because any other tabs will be ignored ![Tabs](../Images/no other tabs.png)
+6. we should ensure the number are written in right format like this ![Format](../Images/Stage 1/number in excel must be in this format.png)
+7. there are possibles of files structure in stage one like this ![structure](../Images/Stage 1/Possible files structure in stage 1.png)
 
+---
 
-ASSORTMENT FILE:
-the most Important file in the structure
-because it control wich products are considered as active products and available on the market for sale or the MP.
-also if any products is have stock 0 or unavailable its better to remove his product from the file.
-Only Products in this file will uploaded and be Available.
+### Offers:
 
-Stock Handle:
-if a product has stock of 0, we can do either set the time that the item will be available again or the date (NOT_BOTH).
-or we just can set the Date to zero and its equal to none or not determined time for recharge.
+To push an offer so we make a file contain at least:
+1. item number.
+2. price.
+3. stock.
+4. EAN/GTIN.
 
+And for activate the products on the website we must create a file:
+1. product data
+2. price
+3. stock
 
-MOQ (Minumum order quantity):
-this helping in shipping as there are some products can't shipped alone or small number so we set the minimum number of products that must be orderd to accept the order.
-if the MOQ is not setted its by default take value of 1
+It’s better to divide them into three files like the image in ![Image](../Images/Stage 1/Possible files sructure in stage 1.png)
 
+---
 
-OQS (Orders Qunatity Steps):
-its mean that if this product can't be shipping in any number like 2 or 3 or 4 
-no it must be a number that fit the shipping package like cooking items or cups like it must be 6 in the package so the order must be 6 or 12 or 18 and so on.
+### ASSORTMENT FILE:
+The most important file in the structure
+Because it controls which products are considered as active products and available on the market for sale or the MP.
+Also, if any product has stock 0 or is unavailable, it's better to remove that product from the file.
+Only products in this file will be uploaded and be Available.
 
+---
 
-GTIN:
-to get GTIN for the product we must sign the Company in GS1 website to get the company number,
-then we set each products align with the company number like if the company number equal to 123456 and my product ID = 10 so the GTIN = 123456000010.
+### Stock Handle:
+If a product has stock of 0, we can do either set the time that the item will be available again or the date (NOT_BOTH).
+Or we just can set the Date to zero and it's equal to none or not determined time for recharge.
 
+---
 
-STRUCTURES:
+### MOQ (Minimum Order Quantity):
+This helps in shipping as there are some products that can't be shipped alone or in a small number, so we set the minimum number of products that must be ordered to accept the order.
+If the MOQ is not set, its default value is 1.
 
-DATA Format
+---
 
-| **Type**                       | **CSV-Standard**                | **XLSX-Standard**                | **Exception/ Remark / Example**   |
-|---------------------------------|---------------------------------|----------------------------------|-----------------------------------|
+### OQS (Order Quantity Steps):
+It means that if this product can't be shipped in any number like 2 or 3 or 4,
+No, it must be a number that fits the shipping package, like cooking items or cups. It must be 6 in the package, so the order must be 6 or 12 or 18 and so on.
+
+---
+
+### GTIN:
+To get GTIN for the product, we must sign the company in GS1 website to get the company number,
+Then we set each product to align with the company number, like if the company number equals to 123456 and my product ID = 10, so the GTIN = 123456000010.
+
+---
+
+### STRUCTURES:
+
+#### DATA Format
+
+| **Type**                       | **CSV-Standard**                | **XLSX-Standard**                | **Exception/Remark/Example**   |
+|---------------------------------|---------------------------------|----------------------------------|--------------------------------|
 | **File format**                 | CSV / TXT                       | XLSX                             | Other formats possible in consultation but not recommended |
 | **File name**                   | File names for initial configuration - without spaces / special characters / umlaut. <br> File names for file updates - the files **must be replaced** by the old files for each transmission and **have exactly the same file names** as the previous ones. | Examples: <br> ProductData_DigitecGalaxus.csv <br> PriceData_DigitecGalaxus.xlsx |                                   |
 | **Character coding**            | UTF-8                           | -                                | Other character codes possible in consultation but not recommended |
@@ -67,8 +81,10 @@ DATA Format
 | **Number format**               | -                               | Cells with numeric values may only be in standard or number format. Other formats, such as accounting or user-defined, are not allowed. <br> Excel deletes leading zeros from numbers, which can lead to problems, especially with article numbers or GTINs. In such a case, the partner should format the affected column as text. | Example - number formats |
 | **Date**                         | Option 1: YYYY-MM-DD           | Option 2: DD.MM.YYYY            | One-digit days/months must be supplemented with a leading zero, e.g. 2020-07-01 or 01.07.2020. <br> Separators are to be used according to the formats. |
 
+---
 
-Notes on Documentation 
+### Notes on Documentation 
+
 | **Topic**                        | **Designation**                                                                          | **Example**                              |
 |----------------------------------|-----------------------------------------------------------------------------------------|------------------------------------------|
 | **Data declaration**             | Str: String, Text <br> Int: Integer, Number <br> Short: (Signed short) 0 - 32'767 <br> Ushort: (Unsigned short) 0 - 65’535 <br> Dec: Decimal, Number with decimals <br> Bool: Boolean, true/false, 1/0 <br> Date: Date | -                                        |
@@ -79,14 +95,18 @@ Notes on Documentation
 | **Units**                        | *unit: Describes the labelling of the units of dimension-specific columns. The permissible units are indicated in the corresponding columns. | Weight_g, Length_cm                     |
 | **Countries**                    | *country: Describes the country identification of country-specific columns. (following standard ISO 3166 ALPHA-2) | ReleaseDate_CH, ReleaseDate_DE         |
 
+---
 
-Minimal criteria: PriceData Supplier Model (Retail / Vendor)
+### Minimal Criteria: PriceData Supplier Model (Retail / Vendor)
+
 | **Header**                     | **Data type**                    | **Designation**                            | **Description**                                                                                                                                                                     |
 |---------------------------------|-----------------------------------|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **ProviderKey**                 | Str(50) <br> ASCII 32-126         | Partner specific item number              | Unique identification number of the partner item. <br> The item numbers must be unique. Duplicates are not permitted. <br> We expect only characters in the range ASCII 32-126.      |
 | **PurchasePriceExclVat_[currency]** | Dec(8,4)                          | Purchase price excl. VAT                  | Digitec Galaxus expects purchase prices excl. VAT and incl./excl. product fees. <br> "currency": Specification of the currency in the header in CHF or EUR. <br> Marketplace CH: Only CHF is accepted as currency. |
 
-Minimal criteria: PriceData Merchant
+---
+
+### Minimal Criteria: PriceData Merchant
 
 | Header                                 | Data type | Designation                          | Description                                                                                 |
 |----------------------------------------|-----------|--------------------------------------|---------------------------------------------------------------------------------------------|
@@ -95,14 +115,15 @@ Minimal criteria: PriceData Merchant
 
 
 Supplementary criteria: Price data supplier model (Retail / Vendor)
-
 | **Header**                      | **Data type**                | **Designation**                                      | **Description**                                                   |
 |---------------------------------|------------------------------|----------------------------------------------------|-------------------------------------------------------------------|
 | **ProviderKey**                 | Str(50) <br> ASCII 32-126    | Partner specific item number                       | Unique identification number of the partner item. <br> The item numbers must be unique. Duplicates are not permitted. <br> We expect only characters in the range ASCII 32-126 |
 | **SalesPriceExclVat_[currency]**| Dec(8,4)                     | Sales price excl. VAT                               | Sales price of a retail pack (ConsumerUnit, CU) excl. VAT <br> "Currency": Specification of the currency in the header in CHF or EUR. |
-| **VatRatePercentage**           | Dec(2,2)                     | VAT rate                                           | VAT rate as a figure without % sign. <br> E.g.: Switzerland: 8.1, 2.6, 0.0 |
+| **VatRatePercentage**           | Dec(2,2)                     | VAT rate                                           | VAT rate as a figure without % sign. <br> E.g.: Switzerland: 8.1, 2.6, 0.0 | 
 
-Minimal criteria Stock Data
+---
+
+### Minimal Criteria Stock Data
 | **Header**                            | **Data type** | **Designation**            | **Description**                                                                                     |
 |---------------------------------------|---------------|----------------------------|-----------------------------------------------------------------------------------------------------|
 | **ProviderKey**                       | Str(50)       | Partner specific item number | Unique identification number of the partner item. <br> The item numbers must be unique. Duplicates are not permitted. <br> We expect only characters in the range ASCII 32-126. |
@@ -128,9 +149,11 @@ The following criteria optimize availability and order processing:
 | **WarehouseId**            | Str(50)       | Warehouse identification number     | The identification number of the warehouse. This information is relevant for assortments with multiple warehouses located in the same country. <br> *Global Location Number (GLN) | GS1 Switzerland*. If no GLN can be transmitted, the zip code can also be used. |
 | **DirectDeliverySupported**| Bool          | Direct delivery supported           | For suppliers with activated end customer delivery, individual articles can be approved for or excluded from end customer delivery. <br> Permissible values: *true, false / 1, 0* |
 
-Minimum criteria: ProductData for offer creation and allocation (identification features)
+---
+
+### Minimum Criteria: ProductData for Offer Creation and Allocation
+
 | **Header**        | **Data type**           | **Designation**             | **Description**                                                                                                                                          |
 |-------------------|-------------------------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **ProviderKey**   | Str(50) <br> *ASCII 32-126* | Partner specific item number | Unique identification number of the partner item. <br> The item numbers must be unique. Duplicates are not permitted. <br> We expect only characters in the range ASCII 32-126. |
-| **Gtin**          | Int(8) <br> Int(12) <br> Int(13) <br> Int(14) | EAN/GTIN code of the article | Unique and globally valid identification number of the article. The following data structures are permitted within the GTIN family: <br> - GTIN-12 (UPC), GTIN-13 (EAN-13, ISSN, ISBN), GTIN-14 (EAN/UCC-128 or ITF-14), GTIN-8 (EAN-8). <br> The EAN/GTIN forms the basis for our automated allocation and product creation processes. Therefore, request GTINs for your products for a smooth data transfer: GS1 Switzerland: Request barcode, GS1 Germany: Request barcode. <br> The EAN/GTINs must be unique and globally valid. Duplicates are not permitted. <br> The EAN/GTIN must be visible on the retail packaging. <br> Further information on Gtins and GS1 at: [gtin.info](http://gtin.info) |
-
+| **Gtin**          | Int(8) <br> Int(12) <br> Int(13) <br> Int(14) | EAN/GTIN code of the article | Unique and globally valid identification number of the article. The following data structures are permitted: GTIN-12 (UPC), GTIN-13 (EAN-13), GTIN-14 (EAN/UCC-128), GTIN-8 (EAN-8). <br> The EAN/GTIN forms the basis for our automated allocation and product creation processes. Therefore, request GTINs for your products for a smooth data transfer: GS1 Switzerland: Request barcode, GS1 Germany: Request barcode. <br> The EAN/GTINs must be unique and globally valid. Duplicates are not permitted. <br> The EAN/GTIN must be visible on the retail packaging. <br> Further information on Gtins and GS1 at: [gtin.info](http://gtin.info) |
