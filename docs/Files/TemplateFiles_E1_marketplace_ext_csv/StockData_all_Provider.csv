@@ -1,0 +1,6 @@
+"ProviderKey";"QuantityOnStock";"RestockTime";"RestockDate";"MinimumOrderQuantity";"OrderQuantitySteps";"TradeUnit";"LogisticUnit";"WarehouseCountry";"DirectDeliverySupported"
+"AAA-001";0;5;05.10.2022;1;1;5;100;"CH";1
+"AAA-002";305;5;05.10.2022;1;1;5;100;"CH";1
+"AAA-004";47;5;05.10.2022;1;1;5;100;"CH";1
+"BBB-001";32;8;08.10.2022;5;5;5;100;"DE";0
+"BBB-003";89;8;08.10.2022;5;5;5;100;"DE";0
