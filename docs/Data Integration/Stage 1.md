@@ -1,12 +1,12 @@
 this file contains how the data structued in stage 1 to start integrate with the company.
 these Images are related to Stage 1:
-1- In the excel we cant repeat columns or set spaces or new line like this Image [header]("../Images/column headers example.png")
-2- When Converting from CSV to EXCEL we should take care about number because it maybe look like this [ISSUE]("../Images/convert from csv to excel issue.png")
-3- when write a GTIN or number it maybe contain leading Zeroes so the excel will ignore them so need to tak care about it [Numbers]("../Images/leading zeroes in cells.png")
-4- we should not set empty lines in the sheet [emptyLines]("../Images/no empty lines.png")
+1- In the excel we cant repeat columns or set spaces or new line like this Image [header]("../Images/Stage 1/column headers example.png")
+2- When Converting from CSV to EXCEL we should take care about number because it maybe look like this [ISSUE]("../Images/Stage 1/convert from csv to excel issue.png")
+3- when write a GTIN or number it maybe contain leading Zeroes so the excel will ignore them so need to tak care about it [Numbers]("../Images/Stage 1/leading zeroes in cells.png")
+4- we should not set empty lines in the sheet [emptyLines]("../Images/Stage 1//no empty lines.png")
 5- we should make the excel file contain only one tab(sheet) because any other tabs will be ignored [Tabs]("../Images/no other tabs.png")
-6- we should ensure the number are written in right format like this [Format]("../Images/number in excel must be in this format.png")
-7- there are possibles of files structure in stage one like this [structure]("../Images/Possible files structure in stage 1.png")
+6- we should ensure the number are written in right format like this [Format]("../Images/Stage 1/number in excel must be in this format.png")
+7- there are possibles of files structure in stage one like this [structure]("../Images/Stage 1/Possible files structure in stage 1.png")
 
 
 first we have the offers:-
@@ -20,7 +20,7 @@ and for activate the products on the website we must create a file:
 1- product data
 2- price
 3- stock
-and better to divide them into three files like image in [Image]("'../Images/Possible files sructure in stage 1.png'")
+and better to divide them into three files like image in [Image]("'../Images/Stage 1/Possible files sructure in stage 1.png'")
 
 
 ASSORTMENT FILE:
