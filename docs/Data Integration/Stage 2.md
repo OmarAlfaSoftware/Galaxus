@@ -12,14 +12,14 @@ So this step helps the end customer to find the products and know more details a
 
 ## The Images Used in Stage 2:
 
-We can add the data in different types but we can find the possible structure in this image ![Image](../Images/Stage 2/Possible Files Structure.png)  
-Second, the TARIC DB code form ![Image](../Images/Stage 2/taric DB.png)
+We can add the data in different types but we can find the possible structure in this image [Image](<../Images/Stage 2/Possible Files Structure.png>)  
+Second, the TARIC DB code form [Image](<../Images/Stage 2/taric DB.png>)
 
 ---
 
 ## Structure:
 
-We can add the data in different types but we can find the possible structure in this image ![Image](../Images/Stage 2/Possible Files Structure.png)
+We can add the data in different types but we can find the possible structure in this image [Image](<../Images/Stage 2/Possible Files Structure.png>)
 
 Each file has its own structure, so let's take them one by one.
 
@@ -40,7 +40,7 @@ The website divides the Category into three sections like `Category_1`, `Categor
 So they divide by three levels. For better filtration, it's preferable to add more subCategories.  
 Also, we have ProductCategory and this I think is unique under all the categories with their different levels,  
 so it’s like Children's Headphone, Building Blocks, etc.  
-You can find all of the categories in this file ![Category](../Files/20231101_Kategorien_DE_EN.xlsx)
+You can find all of the categories in this file [Category](<../Files/20231101_Kategorien_DE_EN.xlsx>)
 
 If there is a new category that doesn't exist in this file, they will review it and add it to their website.
 
