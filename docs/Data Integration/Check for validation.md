@@ -1,5 +1,5 @@
 
-## Part 2: Requirements Before Starting the Process
+Requirements Before Starting the Process
 
 this file contains the requirments before start using the process
 first we need to know the requirments of standards of products to ensure no error will happen in the future

@@ -101,3 +101,5 @@ after finishing the partner portal for supplier i knew that:
 * this is like a dashboard for following the proccess of the integration with galxus
 * the status of the files
 * have also som FAQs for easy helping
+
+## remian complete the documentation then move to order documentation
