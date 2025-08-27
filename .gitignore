@@ -21,3 +21,48 @@ test_*.xml
 # OS 
 .DS_Store 
 Thumbs.db 
+# .NET
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Visual Studio
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Secrets
+appsettings.Development.json
+appsettings.Local.json
+*.pfx
+.env
+
+# Test Results
+TestResults/
+*.trx
+
+# User-specific files
+*.rsuser
+*.dbmdl
+*.jfm
