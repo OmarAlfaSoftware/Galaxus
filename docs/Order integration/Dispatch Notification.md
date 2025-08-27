@@ -135,3 +135,47 @@ then list of shipping products each one has the product details and quantity and
 	</DISPATCHNOTIFICATION_ITEM_LIST>
 </DISPATCHNOTIFICATION>
 ```
+|     |     |     |     |     |
+| --- | --- | --- | --- | --- |
+| **XML Element** | **M/C/S** | **Sample values** | [**Data type**](https://confdg.atlassian.net/wiki/spaces/PI/pages/168689833771 "https://confdg.atlassian.net/wiki/spaces/PI/pages/168689833771") **\[maxLength\]** | **Description** |
+| DISPATCHNOTIFICATION | Must |     |     | See [Namespaces](https://confdg.atlassian.net/wiki/spaces/PI/pages/168689833747 "https://confdg.atlassian.net/wiki/spaces/PI/pages/168689833747") regarding the correct usage of namespaces. |
+| . DISPATCHNOTIFICATION\_HEADER | Must |     |     |     |
+| . . CONTROL\_INFO | Must |     |     |     |
+| . . . GENERATION\_DATE | Must | 2019-01-14T17:05:34 | dtDATETIME | Document creation timestamp |
+| . . DISPATCHNOTIFICATION\_INFO | Must |     |     |     |
+| . . . DISPATCHNOTIFICATION\_ID | Must | 1172016120104084 | dtSTRING\[250\] | ![Warning](https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/atlassian/productivityEmojis/exclamation-32px.png) Reference of the [paper delivery note](https://confdg.atlassian.net/wiki/spaces/PH/pages/170305294741 "https://confdg.atlassian.net/wiki/spaces/PH/pages/170305294741") (delivery note number) - must be unique and not repeated |
+| . . . DISPATCHNOTIFICATION\_DATE | Must | 2017-06-14T17:15:01 | dtDATETIME | Dispatch date |
+| . . . PARTIES | Must |     |     |     |
+| . . . . PARTY | Must |     |     |     |
+| . . . . . PARTY\_ROLE | Must | delivery | dtSTRING\[20\] | Recipient of delivery |
+| . . . . . ADDRESS | Must |     |     | The element ADDRESS in the  PARTY\_ROLE **delivery** must be present, even without any sub-elements. |
+| . . . . . . NAME | Should | Mustermann GmbH | dtMLSTRING\[50\]<br><br>**BMEcat NS** | Company name  <br>![Warning](https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/atlassian/productivityEmojis/exclamation-32px.png) The XML entities `&amp;`, `&lt;`, `&gt;`, `&apos;` and `&quot;` must be escaped |
+| . . . . . . NAME3 | Should | Block A | dtMLSTRING\[50\]<br><br>**BMEcat NS** | Building |
+| . . . . . . DEPARTMENT | Should | Accounting | dtMLSTRING\[50\]<br><br>**BMEcat NS** | Department |
+| . . . . . . CONTACT\_DETAILS | Can | \-  | \-  |     |
+| . . . . . . . TITLE | Should | Mr., Ms. | dtMLSTRING\[20\]<br><br>**BMEcat NS** | Salutation |
+| . . . . . . . FIRST\_NAME | Should | Ulla | dtMLSTRING\[50\]<br><br>**BMEcat NS** | First name |
+| . . . . . . . CONTACT\_NAME | Should | Mustermann | dtMLSTRING\[50\]<br><br>**BMEcat NS** | Last name |
+| . . . . . . STREET | Should | Musterstrasse 200b | dtMLSTRING\[50\]<br><br>**BMEcat NS** | Street incl. No. |
+| . . . . . . ZIP | Should | 8000 | dtMLSTRING\[20\]<br><br>**BMEcat NS** | ZIP code of address or post office box |
+| . . . . . . BOXNO | Should | 7   | dtMLSTRING\[20\]<br><br>**BMEcat NS** | P.O. Box number |
+| . . . . . . CITY | Should | Zürich | dtMLSTRING\[50\]<br><br>**BMEcat NS** | City |
+| . . . . . . COUNTRY | Should | Schweiz | dtMLSTRING\[50\]<br><br>**BMEcat NS** | Country |
+| . . . . . . COUNTRY\_CODED | Can | CH, DE, AT | dtCOUNTRIES<br><br>**BMEcat NS** | Country code according ISO 3166-1 ALPHA-2 |
+| . . . SHIPMENT\_ID | Should \* | 99.00.123456.12345678,  <br>1234.123.123456  <br>per Briefpost,  <br>per Spedition | dtSTRING\[250\] | \* = **Must** for direct deliveries to end customers:<br><br>*   Consignment number/package number of the shipping service provider for tracking purposes  <br>    ![light bulb](https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/ef8b0642-7523-4e13-9fd3-01b65648acf6/32x32/1f4a1.png) If possible for parcels to the warehouse, if the consignment number is available as a barcode (even if SSCC has not been implemented), transmit it here<br>    <br>*   In the case of goods shipment, the shipment number/operation number of the freight forwarder should be transmitted, even if no shipment tracking is possible via this number<br>    <br>*   If the shipment is made by letter post, then _«per Briefpost»_ |
+| . . . SHIPMENT\_CARRIER | Should \* | swisspost, postlogistics, dhl, dhlfreight, planzer, streck-de, hermes, tnt, dpd, ups, gls, fedex, dachser, transoflex, gebruederweiss, galliker, schoeni, quickpac, austria-post, dsv, schenker, sidler, noerpel, emons, hellmann, asendia, amm, camiontransport, fba, chronopost, pickwings, papyrus | dtSTRING\[50\] | \* = **Must** for direct deliveries to end customers  <br>![Question Mark](https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/atlassian/productivityEmojis/question-32px.png) Currently, only the values listed under sample values are permitted. If a different logistics service provider is used, the responsible Integration Manager needs to be contacted.<br><br>Attention: please note the following for Planzer as a shipping service provider:<br><br>![warning](https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/ef8b0642-7523-4e13-9fd3-01b65648acf6/32x32/26a0.png) Warning In the case of Planzer, we need the eight-digit shipment number as SHIPMENT\_ID (not the package number). Example:<br><br><SHIPMENT\_ID>40172372</SHIPMENT\_ID>  <br><SHIPMENT\_CARRIER>planzer</SHIPMENT\_CARRIER> |
+| . DISPATCHNOTIFICATION\_ITEM\_LIST | Must |     |     |     |
+| . . DISPATCHNOTIFICATION\_ITEM | Must |     |     |     |
+| . . . PRODUCT\_ID | Must |     |     |     |
+| . . . . SUPPLIER\_PID | Must | A375-129 | dtSTRING\[50\]<br><br>**BMEcat NS** | Partner product key |
+| . . . . INTERNATIONAL\_PID | Must | 09783404175109 | dtSTRING\[14\]<br><br>**BMEcat NS** | GTIN-14 with leading zeros |
+| . . . . BUYER\_PID | Can | 6406567 | dtSTRING\[50\]<br><br>**BMEcat NS** | Galaxus product key |
+| . . . . SERIAL\_NUMBER | Can | 0021010000 | dtSTRING\[50\]<br><br>**BMEcat NS** | Serial number: Unique identification of a single product (product instance).  <br>The element can occur accordingly several times for QUANTITY > 1. |
+| . . . QUANTITY | Must | 5   | dtNUMBER | Quantity (Integer > 0) |
+| . . . ORDER\_REFERENCE | Must |     |     |     |
+| . . . . ORDER\_ID | Must | 9316271 | dtSTRING\[25\] | Reference Order ID – indicates the corresponding order for the delivery |
+| . . . LOGISTIC\_DETAILS | Should \* |     |     | **Warehouse deliveries (supplier)**  <br>\* = If this element can be sent, its sub-elements are must fields and the conditions from [Incoming goods automation with SSCC](https://confdg.atlassian.net/wiki/spaces/PI/pages/168693622611 "https://confdg.atlassian.net/wiki/spaces/PI/pages/168693622611") must be met.<br><br>**Direct deliveries (supplier & merchant)**  <br>\* = Basically this element and its sub-elements should not be sent. However, it can be used to specify different tracking codes per item and piece. |
+| . . . . PACKAGE\_INFO | Should \* |     |     |     |
+| . . . . . PACKAGE | Should \* |     |     |     |
+| . . . . . . PACKAGE\_ID | Should \* | 00001234560000000028, 99.00.123456.12345678 | dtSTRING\[50\] | **Best**: SSCC  <br>**Minimum requirement**: barcode value present on a label on the pallet or package  <br>Compatible code type: **GS1-128**  <br>The scannable code must correspond exactly to the PACKAGE\_ID  <br>The value must be unique and must not be repeated within one year<br><br>![Warning](https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/atlassian/productivityEmojis/exclamation-32px.png) For direct deliveries (if LOGISTIC\_DETAILS are sent), the consignment number must be transmitted here  <br>![light bulb](https://pf-emoji-service--cdn.us-east-1.prod.public.atl-paas.net/standard/ef8b0642-7523-4e13-9fd3-01b65648acf6/32x32/1f4a1.png) Several PACKAGE elements can be used to transmit different consignment numbers (parcels) in one DELR |
+| . . . . . . PACKAGE\_ORDER\_UNIT\_QUANTITY | Should \* | 3   | dtNUMBER | Number of pieces of an item available in the package / on the pallet |

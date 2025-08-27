@@ -83,3 +83,26 @@ and lastely special Data
 | **Extensions header**          | udxHEADER     | This data type is defined empty and is used to define user-defined non-openTRANS elements for the header.                                                          |           |
 | **Extensions position level**  | udxITEM       | This data type is defined empty and is used to define user-defined non-openTRANS elements for item-level description.                                             |           |
 
+
+now we  have these files, each file discuss an important section with the details about it 
+
+1. Order processing
+   1. this file discuss how the order is sent to us [Order processing](<./Order Processing.md>)
+2. Order Response
+   1. this file discuss how we respond to an coming order [Order Response](<./Order Response.md>)
+3. Shipping notification (Dispatch Notification)
+   1. this file disucss the shipping operation [Shipping](<./Dispatch Notification.md>)
+   2. next we have the shipping packaging details so this file discuss this[ packaging](<./Incoming goods.md>) 
+4. Invoices
+   1. this file contain how we send the Invoice [Invoice](<./Invoices.md>)
+   2. then this file discuss the style of the pdfs of the invoices [Invoice Pdf](<./Export Invoices.md>)
+5. Cancellation
+   1. the cancelation from our side [Cancelation from us](<./Supplier Cancel Order Notification.md>)
+   2. cancellation from Galaxus side [Galaxus Cancellation](<./Cancel Request Process.md>) 
+   3. respond on Galaxus request [Cancellation respose](<./Cancel Confirmation.md>)
+6. Return the order
+   1. after recive the order the customer need to return it so he send a request for this [Return request](<./Return Registration.md>)
+   2. the response from our side [return response](<./Supplier Return Notification.md>)
+   
+these files cover all dimensions of the order operations
+
