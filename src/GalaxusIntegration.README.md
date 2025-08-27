@@ -4,7 +4,7 @@
 
 This solution is designed for integrating with the Galaxus marketplace using .NET 9. It follows a modular, layered architecture to separate concerns and facilitate maintainability. The main projects are:
 
-- **GalaxusIntegration.Api**: Exposes HTTP endpoints, handles authentication, and provides Swagger documentation for internal use.
+- **GalaxusIntegration.Api**: Exposes HTTP endpoints, handles authentication, and provides Swagger documentation for internal use. All controllers are now mapped and included in Swagger, making API endpoints visible and testable via the Swagger UI.
 - **GalaxusIntegration.Application**: Contains application logic, use cases, DTOs, and service abstractions.
 - **GalaxusIntegration.Core**: Holds domain entities, business rules, and core validation logic.
 - **GalaxusIntegration.Infrastructure**: Implements data access, SFTP/FTP, file processing, and external API integrations.
@@ -19,7 +19,7 @@ This solution is designed for integrating with the Galaxus marketplace using .NE
 - **Microsoft.EntityFrameworkCore.Tools**: Provides EF Core CLI tooling for migrations and scaffolding.
 - **Serilog.AspNetCore**: Adds Serilog logging to ASP.NET Core for structured logging.
 - **Serilog.Sinks.PostgreSQL**: Allows logging directly to PostgreSQL for audit trails.
-- **Swashbuckle.AspNetCore.Swagger/SwaggerGen/SwaggerUI**: Generates and serves Swagger UI and OpenAPI docs for the API.
+- **Swashbuckle.AspNetCore.Swagger/SwaggerGen/SwaggerUI**: Generates and serves Swagger UI and OpenAPI docs for the API. All controllers and endpoints are now visible and testable in Swagger UI.
 
 ### GalaxusIntegration.Application
 - **AutoMapper**: Simplifies mapping between domain models and DTOs.
@@ -51,9 +51,9 @@ This solution is designed for integrating with the Galaxus marketplace using .NE
 - **Logging**: Serilog (with PostgreSQL sink) provides robust, queryable audit trails for all integration activity.
 - **Database**: Npgsql.EntityFrameworkCore.PostgreSQL is required for PostgreSQL, the recommended DB for this solution.
 - **Testing**: xUnit, Moq, AutoFixture, FluentAssertions, and EFCore.InMemory ensure the solution is reliable and maintainable.
-- **API & Documentation**: Swashbuckle and OpenAPI packages provide interactive documentation and testing for internal APIs.
+- **API & Documentation**: Swashbuckle and OpenAPI packages provide interactive documentation and testing for internal APIs. All controllers are now mapped and visible in Swagger.
 - **Security**: JWT Bearer authentication secures the API endpoints.
 
 ## Summary
 
-This solution is ready for robust, maintainable Galaxus integration, following best practices for .NET, validation, logging, and testability. Each package is chosen to address a specific requirement from the Galaxus integration guide or to support modern .NET development patterns.
+This solution is ready for robust, maintainable Galaxus integration, following best practices for .NET, validation, logging, and testability. Each package is chosen to address a specific requirement from the Galaxus integration guide or to support modern .NET development patterns. All API controllers and endpoints are now mapped and visible in Swagger UI for easy testing and documentation.
