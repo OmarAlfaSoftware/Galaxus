@@ -12,7 +12,8 @@ so the order response could set the delivery time or not also accept some and re
  in the backorder delivery for marketplace irect delivery if it take than 30 days the order must be cancelled 
  now for the structure of the request
  we can respose like this 
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDERRESPONSE xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<ORDERRESPONSE_HEADER>
 		<ORDERRESPONSE_INFO>
@@ -38,7 +39,8 @@ so the order response could set the delivery time or not also accept some and re
 </ORDERRESPONSE>
 ```
 or like this 
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDERRESPONSE xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<ORDERRESPONSE_HEADER>
 		<ORDERRESPONSE_INFO>
@@ -65,7 +67,8 @@ or like this
 ```
 
 there are minimum structure of the response of the order and it will be like this
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDERRESPONSE xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<ORDERRESPONSE_HEADER>
 		<ORDERRESPONSE_INFO>

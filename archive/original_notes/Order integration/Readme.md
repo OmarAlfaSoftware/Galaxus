@@ -17,7 +17,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns="http://www.opentrans.org/XMLSchema/2.1"
 
 version="2.1"
-and must been like this 
+and must been like this
+```xml
+
 <?xml version="1.0" encoding="utf-8"?>
 <ORDERRESPONSE xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<ORDERRESPONSE_HEADER>
@@ -27,8 +29,10 @@ and must been like this
 		...
 	</ORDERRESPONSE_ITEM_LIST>
 </ORDERRESPONSE>
-
+```
 also in the body of the file there are some standards like the way of write the attibute like this 
+```xml
+
 1. <?xml version="1.0" encoding="utf-8"?>
 <ORDERRESPONSE xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 ...
@@ -39,7 +43,9 @@ also in the body of the file there are some standards like the way of write the 
 	</PRODUCT_ID>
 ...
 </ORDERRESPONSE>
+```
 1. or this 
+```xml
  <?xml version="1.0" encoding="utf-8"?>
 <ORDERRESPONSE xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" xmlns:bmecat="http://www.bmecat.org/bmecat/2005" version="2.1">
 ...
@@ -50,7 +56,7 @@ also in the body of the file there are some standards like the way of write the 
 			</PRODUCT_ID>
 ...	
 </ORDERRESPONSE>
-
+```
 and both are right 
 
 after that we have the datatypes and its standards also that use in all files

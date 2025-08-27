@@ -23,7 +23,8 @@ each item carry the product details
 and then we have the accept or reject and the quantity and the comment
 
 and this an example for it 
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <SUPPLIERRETURNNOTIFICATION xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<SUPPLIERRETURNNOTIFICATION_HEADER>
 		<SUPPLIERRETURNNOTIFICATION_INFO>

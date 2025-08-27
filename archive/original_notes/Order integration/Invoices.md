@@ -57,7 +57,8 @@ next we have the Invoice summary
 
 
 this an example of the xml 
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <INVOICE xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<INVOICE_HEADER>
 		<CONTROL_INFO>

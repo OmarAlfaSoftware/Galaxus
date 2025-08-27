@@ -7,7 +7,8 @@ and the pacakge details as each package contains wich products and how many and 
 also this is optional but prefferble section
 
 this an example of it 
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <DISPATCHNOTIFICATION xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">	
 	<!-- IMPLEMENTATION EXAMPLES OF DISPATCHNOTIFICATION <LOGISTIC_DETAILS>-->
 	<!-- Digitec Galaxus: V1.2 / 02.07.2020 -->
@@ -184,7 +185,8 @@ so this an example of one package carry four units of product of the same order
 lets discuss another examples like 
 
 1 proudct in four package will be like this
-``` <DISPATCHNOTIFICATION_ITEM>
+```xml
+ <DISPATCHNOTIFICATION_ITEM>
       <PRODUCT_ID>
         <SUPPLIER_PID xmlns="http://www.bmecat.org/bmecat/2005">4251421947955</SUPPLIER_PID>
         <INTERNATIONAL_PID xmlns="http://www.bmecat.org/bmecat/2005">04251421947955</INTERNATIONAL_PID>
@@ -218,7 +220,8 @@ lets discuss another examples like
 ```
 
 2 diffrent product in 2 pakages each
-``` <DISPATCHNOTIFICATION_ITEM_LIST>
+```xml
+ <DISPATCHNOTIFICATION_ITEM_LIST>
     <DISPATCHNOTIFICATION_ITEM>
       <PRODUCT_ID>
         <SUPPLIER_PID xmlns="http://www.bmecat.org/bmecat/2005">4251421947955</SUPPLIER_PID>
@@ -268,7 +271,8 @@ lets discuss another examples like
   </DISPATCHNOTIFICATION_ITEM_LIST>
 ```
 and last is 3 diffrent product in 3 diffrent packages
-```  <DISPATCHNOTIFICATION_ITEM_LIST>
+```xml
+  <DISPATCHNOTIFICATION_ITEM_LIST>
     <DISPATCHNOTIFICATION_ITEM>
       <PRODUCT_ID>
         <SUPPLIER_PID xmlns="http://www.bmecat.org/bmecat/2005">4251421947955</SUPPLIER_PID>

@@ -21,7 +21,8 @@ and a comment  if there
 
 so the XML will be like this 
 
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <CANCELCONFIRMATION xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<CANCELCONFIRMATION_HEADER>
 		<CANCELCONFIRMATION_INFO>

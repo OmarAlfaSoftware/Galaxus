@@ -18,7 +18,8 @@ then list of shipping products each one has the product details and quantity and
  we have to possible structure
  like 
  direct delivery to end customer
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <DISPATCHNOTIFICATION xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<DISPATCHNOTIFICATION_HEADER>
 		<CONTROL_INFO>
@@ -64,7 +65,8 @@ then list of shipping products each one has the product details and quantity and
 </DISPATCHNOTIFICATION>
 ```
 2. example warehouse delivery
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <DISPATCHNOTIFICATION xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<DISPATCHNOTIFICATION_HEADER>
 		<CONTROL_INFO>

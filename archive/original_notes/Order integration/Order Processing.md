@@ -98,7 +98,8 @@ then the order summary that has total item number and amount.
 then we have all the possible of the incoming order style like.
 
 1. private customer
- ```<?xml version="1.0" encoding="utf-8"?>
+ ```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -218,7 +219,8 @@ then we have all the possible of the incoming order style like.
 </ORDER> 
 ```
 2. private customer with company address
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -336,7 +338,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 3. company customer
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -476,7 +479,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 4. warehouse delivery (Villmergen/wholen)
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -611,7 +615,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 5. warehouse delivery (Dintikon)
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -723,7 +728,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 6. warehouse delivery (Roggwil)
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -854,7 +860,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 7. warehouse delivery (Oftringen)
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -989,7 +996,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 8. EU-Hub dealer private customer
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -1129,7 +1137,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 9.  private customer DE
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -1247,7 +1256,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 10. private customer with company address AT
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -1366,7 +1376,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 11. warehouse delivery (Krefled Fichtenhain)
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>
@@ -1498,7 +1509,8 @@ then we have all the possible of the incoming order style like.
 </ORDER>
 ```
 12. warehouse delivery (Krefled Huls)
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <ORDER xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.1" type="standard" xmlns="http://www.opentrans.org/XMLSchema/2.1">
 	<ORDER_HEADER>
 		<CONTROL_INFO>

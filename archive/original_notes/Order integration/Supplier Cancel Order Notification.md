@@ -22,7 +22,8 @@ and the quantity that needed to cancelled
 
 this an example for the XML
 
-```<?xml version="1.0" encoding="utf-8"?>
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 <SUPPLIERCANCELNOTIFICATION xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opentrans.org/XMLSchema/2.1" version="2.1">
 	<SUPPLIERCANCELNOTIFICATION_HEADER>
 		<SUPPLIERCANCELNOTIFICATION_INFO>
