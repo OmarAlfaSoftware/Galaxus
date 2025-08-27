@@ -1,0 +1,23 @@
+# Environment 
+.env 
+venv/ 
+__pycache__/ 
+*.pyc 
+ 
+# Credentials 
+config/credentials.* 
+*_credentials.* 
+ 
+# Test files 
+test_*.csv 
+test_*.xml 
+*.log 
+ 
+# IDE 
+.idea/ 
+.vscode/ 
+*.swp 
+ 
+# OS 
+.DS_Store 
+Thumbs.db 
