@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxusIntegration.Infrastr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxusIntegration.Tests", "GalaxusIntegration.Tests\GalaxusIntegration.Tests.csproj", "{D2007C2A-B664-4D46-8206-970854FBBA9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxusIntegration.Shared", "GalaxusIntegration.Shared\GalaxusIntegration.Shared.csproj", "{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Release|x64.Build.0 = Release|Any CPU
 		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Release|x86.ActiveCfg = Release|Any CPU
 		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Release|x86.Build.0 = Release|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Debug|x64.Build.0 = Debug|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Debug|x86.Build.0 = Debug|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Release|x64.ActiveCfg = Release|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Release|x64.Build.0 = Release|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Release|x86.ActiveCfg = Release|Any CPU
+		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

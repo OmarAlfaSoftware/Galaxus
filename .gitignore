@@ -46,6 +46,7 @@ x86/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+wwwroot/
 
 # .NET Core
 project.lock.json

@@ -1,4 +1,4 @@
-namespace GalaxusIntegration.Application.Services
+namespace GalaxusIntegration.Application.Interfaces
 {
     public interface IValidationService
     {
