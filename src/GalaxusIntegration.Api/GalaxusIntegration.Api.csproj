@@ -22,6 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GalaxusIntegration.Application\GalaxusIntegration.Application.csproj" />
+    <ProjectReference Include="..\GalaxusIntegration.Infrastructure\GalaxusIntegration.Infrastructure.csproj" />
+    <ProjectReference Include="..\GalaxusIntegration.Shared\GalaxusIntegration.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Filters\" />
   </ItemGroup>
 

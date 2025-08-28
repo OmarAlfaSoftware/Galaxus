@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="7.0.9" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GalaxusIntegration.Core\GalaxusIntegration.Core.csproj" />
+    <ProjectReference Include="..\GalaxusIntegration.Application\GalaxusIntegration.Application.csproj" />
+    <ProjectReference Include="..\GalaxusIntegration.Shared\GalaxusIntegration.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

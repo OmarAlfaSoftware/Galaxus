@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
     <Folder Include="Domain logic\" />
     <Folder Include="Buisness Rules\" />
   </ItemGroup>
@@ -15,6 +14,10 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="MediatR" Version="13.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GalaxusIntegration.Shared\GalaxusIntegration.Shared.csproj" />
   </ItemGroup>
 
 </Project>

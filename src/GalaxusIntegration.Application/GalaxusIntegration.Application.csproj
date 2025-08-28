@@ -7,10 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\ExcelFiles\" />
     <Folder Include="DTOs\Order Response\" />
     <Folder Include="DTOs\Order Requests\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Use Cases\" />
   </ItemGroup>
 
@@ -19,6 +17,11 @@
     <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="MediatR" Version="13.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GalaxusIntegration.Core\GalaxusIntegration.Core.csproj" />
+    <ProjectReference Include="..\GalaxusIntegration.Shared\GalaxusIntegration.Shared.csproj" />
   </ItemGroup>
 
 </Project>
