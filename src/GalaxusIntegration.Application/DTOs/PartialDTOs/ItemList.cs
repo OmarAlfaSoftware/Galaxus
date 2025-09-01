@@ -2,7 +2,7 @@
 
 namespace GalaxusIntegration.Application.DTOs.PartialDTOs;
 
-public class OrderItemList
+public class ItemList
 {
     [XmlElement("ORDER_ITEM")]
     public List<OrderItem> Items { get; set; }

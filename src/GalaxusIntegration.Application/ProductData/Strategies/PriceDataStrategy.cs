@@ -15,8 +15,8 @@ namespace GalaxusIntegration.Application.ProductData.Strategies
             var priceDTO = new PriceDataDTO.PriceDataDTOBuilder()
                 .WithProviderKey("P12")
                 .WithPriceWithoutVAT(100)
-                .WithPriceWithVAT(107.7m)
-                .WithVAT(7.7m)
+                .WithPriceWithVAT(107.7)
+                .WithVAT(7.7)
                 .Build();
 
             return new ProductDataGenerator

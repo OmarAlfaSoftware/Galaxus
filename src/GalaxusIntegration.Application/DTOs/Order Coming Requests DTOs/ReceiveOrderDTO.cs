@@ -11,11 +11,11 @@ public class ReceiveOrderDTO
     public string Type { get; set; }
 
     [XmlElement("ORDER_HEADER")]
-    public OrderHeader OrderHeader { get; set; }
+    public Header OrderHeader { get; set; }
 
     [XmlElement("ORDER_ITEM_LIST")]
-    public OrderItemList OrderItemList { get; set; }
+    public ItemList OrderItemList { get; set; }
 
     [XmlElement("ORDER_SUMMARY")]
-    public OrderSummary OrderSummary { get; set; }
+    public Summary OrderSummary { get; set; }
 }

@@ -2,7 +2,7 @@
 
 namespace GalaxusIntegration.Application.DTOs.PartialDTOs;
 
-public class OrderSummary
+public class Summary
 {
     [XmlElement("TOTAL_ITEM_NUM")]
     public int TotalItemNum { get; set; }

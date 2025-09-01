@@ -9,11 +9,11 @@ namespace GalaxusIntegration.Application.DTOs.ProductDTOs
     public class PriceDataDTO
     {
         public string ProviderKey { get; set; }
-        public decimal PriceWithoutVAT { get; set; }
-        public decimal PriceWithVAT { get; set; }
-        public decimal VAT { get; set; }
+        public double PriceWithoutVAT { get; set; }
+        public double PriceWithVAT { get; set; }
+        public double VAT { get; set; }
 
-        private PriceDataDTO(string providerKey, decimal priceWithoutVAT, decimal priceWithVat, decimal vat)
+        private PriceDataDTO(string providerKey, double priceWithoutVAT, double priceWithVat, double vat)
         {
             ProviderKey = providerKey;
             PriceWithoutVAT = priceWithoutVAT;
@@ -24,9 +24,9 @@ namespace GalaxusIntegration.Application.DTOs.ProductDTOs
         public class PriceDataDTOBuilder
         {
             private string _providerKey;
-            private decimal _priceWithoutVAT;
-            private decimal _priceWithVAT;
-            private decimal _vat;
+            private double _priceWithoutVAT;
+            private double _priceWithVAT;
+            private double _vat;
 
             public PriceDataDTOBuilder WithProviderKey(string providerKey)
             {
@@ -34,19 +34,19 @@ namespace GalaxusIntegration.Application.DTOs.ProductDTOs
                 return this;
             }
 
-            public PriceDataDTOBuilder WithPriceWithoutVAT(decimal priceWithoutVAT)
+            public PriceDataDTOBuilder WithPriceWithoutVAT(double priceWithoutVAT)
             {
                 _priceWithoutVAT = priceWithoutVAT;
                 return this;
             }
 
-            public PriceDataDTOBuilder WithPriceWithVAT(decimal priceWithVAT)
+            public PriceDataDTOBuilder WithPriceWithVAT(double priceWithVAT)
             {
                 _priceWithVAT = priceWithVAT;
                 return this;
             }
 
-            public PriceDataDTOBuilder WithVAT(decimal vat)
+            public PriceDataDTOBuilder WithVAT(double vat)
             {
                 _vat = vat;
                 return this;

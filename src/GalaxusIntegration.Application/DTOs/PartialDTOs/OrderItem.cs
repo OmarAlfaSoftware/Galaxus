@@ -12,7 +12,7 @@ public class OrderItem
     public ProductDetails ProductId { get; set; }
 
     [XmlElement("QUANTITY")]
-    public decimal Quantity { get; set; }
+    public double Quantity { get; set; }
 
     [XmlElement("ORDER_UNIT", Namespace = "http://www.bmecat.org/bmecat/2005")]
     public string OrderUnit { get; set; }
@@ -21,7 +21,7 @@ public class OrderItem
     public ProductPriceFix ProductPriceFix { get; set; }
 
     [XmlElement("PRICE_LINE_AMOUNT")]
-    public decimal PriceLineAmount { get; set; }
+    public double PriceLineAmount { get; set; }
 
     [XmlElement("DELIVERY_DATE")]
     public DeliveryDate? DeliveryDate { get; set; }

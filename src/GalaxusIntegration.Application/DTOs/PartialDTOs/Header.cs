@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace GalaxusIntegration.Application.DTOs.PartialDTOs
 {
-    public class OrderHeader
+    public class Header
     {
         [XmlElement("CONTROL_INFO")]
         public ControlInfo ControlInfo { get; set; }

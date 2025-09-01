@@ -1,4 +1,7 @@
 using GalaxusIntegration.Application.DTOs.Order_Coming_Requests;
+using GalaxusIntegration.Application.Factories;
+using GalaxusIntegration.Application.Models;
+using GalaxusIntegration.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Xml.Serialization;
@@ -8,10 +11,14 @@ using System.Xml.Serialization;
 public class OrderController : ControllerBase
 {
     private readonly ILogger<OrderController> _logger;
+    private readonly IDocumentProcessorFactory _processorFactory;
+    private readonly IXmlParserService _xmlParser;
 
-    public OrderController(ILogger<OrderController> logger)
+    public OrderController(ILogger<OrderController> logger,IDocumentProcessorFactory processor, IXmlParserService _xmlParserService)
     {
         _logger = logger;
+        _processorFactory = processor;
+        _xmlParser = _xmlParserService;
     }
 
     [HttpPost("receive")]
@@ -62,6 +69,32 @@ public class OrderController : ControllerBase
         {
             _logger.LogError(ex, "Error processing order");
             return StatusCode(500, new { error = "Failed to process order", message = ex.Message });
+        }
+    }
+    [HttpPost("receiveDocument")]
+    [Consumes("application/xml", "text/xml")]
+    [Produces("application/json")]
+    public async Task<IActionResult> ReceiveDocument()
+    {
+
+        try
+        {
+            using var reader = new StreamReader(Request.Body);
+            var xmlContent = await reader.ReadToEndAsync();
+
+            // Parse XML to unified model
+            var document = _xmlParser.ParseDocument(xmlContent);
+
+            // Process based on type
+            var processor = _processorFactory.GetProcessor(document.DocumentType);
+            var result = await processor.ProcessAsync(document);
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error processing document");
+            return BadRequest(new { error = ex.Message });
         }
     }
 }
