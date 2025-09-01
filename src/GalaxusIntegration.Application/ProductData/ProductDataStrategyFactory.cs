@@ -1,3 +1,4 @@
+using GalaxusIntegration.Application.Interfaces;
 using GalaxusIntegration.Application.ProductData.Strategies;
 using GalaxusIntegration.Shared.Enum;
 

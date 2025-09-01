@@ -1,6 +1,6 @@
 using AutoMapper;
-using GalaxusIntegration.Application.DTOs.Galaxus;
-using GalaxusIntegration.Application.DTOs.Internal;
+using GalaxusIntegration.Application.DTOs;
+using GalaxusIntegration.Application.DTOs;
 
 namespace GalaxusIntegration.Application.Profiles
 {
@@ -8,10 +8,7 @@ namespace GalaxusIntegration.Application.Profiles
     {
         public ProductMappingProfile()
         {
-            CreateMap<ProductDto, Stage1ProductDto>();
-            CreateMap<ProductDto, Stage2CommercialDto>();
-            CreateMap<ProductDto, Stage3SpecificationDto>();
-            // Add reverse maps and custom mappings as needed
+
         }
     }
 }

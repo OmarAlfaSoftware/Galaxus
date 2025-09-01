@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GalaxusIntegration.Core.Entities
 {
-    internal class ProductCategory
+    public class ProductCategory
     {
     }
 }

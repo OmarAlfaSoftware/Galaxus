@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaxusIntegration.Application.Interfaces;
-using GalaxusIntegration.Application.ProductData.Strategies;
 
 namespace GalaxusIntegration.Application.ProductData
 {

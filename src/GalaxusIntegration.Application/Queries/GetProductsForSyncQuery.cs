@@ -1,10 +1,10 @@
 using MediatR;
-using GalaxusIntegration.Application.DTOs.Internal;
+using GalaxusIntegration.Application.DTOs;
 using System.Collections.Generic;
 
 namespace GalaxusIntegration.Application.Queries
 {
-    public class GetProductsForSyncQuery : IRequest<List<ProductDto>>
+    public class GetProductsForSyncQuery : IRequest
     {
         public GetProductsForSyncQuery() { }
     }
