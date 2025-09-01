@@ -1,9 +1,18 @@
+using System.Reflection;
 using GalaxusIntegration.Application.Factories;
 using GalaxusIntegration.Application.Interfaces;
+using GalaxusIntegration.Application.Mappings;
 using GalaxusIntegration.Application.Services;
+using GalaxusIntegration.Application.Services.Processors;
+using GalaxusIntegration.Application.Mappings.Profiles;
+using GalaxusIntegration.Infrastructure.Database;
 using GalaxusIntegration.Infrastructure.Excel_files;
+using GalaxusIntegration.Infrastructure.Xml.Builders;
+using GalaxusIntegration.Infrastructure.Xml.Configuration;
+using GalaxusIntegration.Infrastructure.Xml.Parsers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,14 +21,44 @@ builder.Services.AddControllers()
     .AddXmlSerializerFormatters() // Add XML support
     .AddXmlDataContractSerializerFormatters();
 builder.Services.AddEndpointsApiExplorer();
+
+// File services
 builder.Services.AddScoped<IFileGenerationService>(provider =>
-    new ExcelExporter(Path.Combine(builder.Environment.ContentRootPath, "wwwroot")));;
+    new ExcelExporter(Path.Combine(builder.Environment.ContentRootPath, "wwwroot")));
 builder.Services.AddScoped(typeof(ProductFileService));
 builder.Services.AddScoped(typeof(OrderFilesServices));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("app.db"));
+
+// XML integration services
+builder.Services.AddSingleton<XmlNamespaceConfig>();
+builder.Services.AddSingleton<DocumentTypeRegistry>();
+builder.Services.AddScoped<IXmlParser, GenericXmlParser>();
+builder.Services.AddScoped<IXmlBuilder, NamespaceAwareXmlBuilder>();
+
+// Document processors
+builder.Services.AddScoped<IDocumentProcessor, OrderProcessor>();
+builder.Services.AddScoped<IDocumentProcessorFactory, DocumentProcessorFactory>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+// Mapping services (scan Application + API assemblies for profiles)
+builder.Services.AddAutoMapper(cfg => { }, typeof(IncomingMappingProfile).Assembly, typeof(Program).Assembly);
+builder.Services.AddScoped<IGalaxusDocumentMapper, GalaxusDocumentMapper>();
+
+// HTTP client for external API
+builder.Services.AddHttpClient("GalaxusAPI", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["GalaxusAPI:BaseUrl"] ?? "https://api.galaxus.ch");
+    client.DefaultRequestHeaders.Add("Accept", "application/xml");
+});
+
+// Legacy services (keep for backward compatibility)
 builder.Services.AddScoped<IDocumentProcessorFactory, DocumentProcessorFactory>();
 builder.Services.AddScoped<OrderProcessor>();
-builder.Services.AddScoped<ReturnProcessor>();
+// builder.Services.AddScoped<ReturnProcessor>(); // Commented out - ReturnProcessor not implemented yet
 builder.Services.AddScoped<IXmlParserService, XmlParserService>();
+builder.Services.AddScoped<IUnifiedDocumentProcessor, UnifiedOrderProcessor>();
+builder.Services.AddScoped<IUnifiedDocumentProcessor, UnifiedReturnProcessor>();
+builder.Services.AddScoped<IUnifiedDocumentProcessorFactory, UnifiedDocumentProcessorFactory>();
 
 
 builder.Services.AddSwaggerGen(c =>
@@ -33,6 +72,9 @@ builder.Services.AddSwaggerGen(c =>
     {
         c.IncludeXmlComments(xmlPath);
     }
+
+    // Avoid schema ID collisions for types with identical names
+    c.CustomSchemaIds(type => type.FullName?.Replace('+', '.') ?? type.Name);
 
     // Configure Swagger to handle XML properly
     c.UseInlineDefinitionsForEnums();
@@ -63,3 +105,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+/*
+
+
+
+*/

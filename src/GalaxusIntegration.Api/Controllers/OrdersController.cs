@@ -2,6 +2,8 @@ using GalaxusIntegration.Application.DTOs.Order_Coming_Requests;
 using GalaxusIntegration.Application.Factories;
 using GalaxusIntegration.Application.Models;
 using GalaxusIntegration.Application.Services;
+using GalaxusIntegration.Application.DTOs.Internal;
+using GalaxusIntegration.Infrastructure.Xml.Parsers;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Xml.Serialization;
@@ -12,13 +14,13 @@ public class OrderController : ControllerBase
 {
     private readonly ILogger<OrderController> _logger;
     private readonly IDocumentProcessorFactory _processorFactory;
-    private readonly IXmlParserService _xmlParser;
+    private readonly IXmlParser _xmlParser;
 
-    public OrderController(ILogger<OrderController> logger,IDocumentProcessorFactory processor, IXmlParserService _xmlParserService)
+    public OrderController(ILogger<OrderController> logger,IDocumentProcessorFactory processor, IXmlParser xmlParser)
     {
-        _logger = logger;
-        _processorFactory = processor;
-        _xmlParser = _xmlParserService;
+                    _logger = logger;
+            _processorFactory = processor;
+            _xmlParser = xmlParser;
     }
 
     [HttpPost("receive")]
@@ -83,7 +85,7 @@ public class OrderController : ControllerBase
             var xmlContent = await reader.ReadToEndAsync();
 
             // Parse XML to unified model
-            var document = _xmlParser.ParseDocument(xmlContent);
+            var document = _xmlParser.Parse(xmlContent);
 
             // Process based on type
             var processor = _processorFactory.GetProcessor(document.DocumentType);
