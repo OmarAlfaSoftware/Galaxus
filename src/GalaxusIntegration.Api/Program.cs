@@ -1,23 +1,34 @@
 using GalaxusIntegration.Application.Interfaces;
 using GalaxusIntegration.Application.Services;
 using GalaxusIntegration.Infrastructure.Excel_files;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddXmlSerializerFormatters() // Add XML support
+    .AddXmlDataContractSerializerFormatters();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IFileGenerationService>(provider =>
     new ExcelExporter(Path.Combine(builder.Environment.ContentRootPath, "wwwroot")));;
 builder.Services.AddScoped(typeof(ProductFileService));
-builder.Services.AddSwaggerGen(options =>
+builder.Services.AddScoped(typeof(OrderFilesServices));
+builder.Services.AddSwaggerGen(c =>
 {
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Galaxus Integration API", Version = "v1" });
+
+    // Add XML comments if you have them
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
     {
-        Title = "Galaxus Integration API",
-        Version = "v1",
-        Description = "API for Galaxus Integration services"
-    });
+        c.IncludeXmlComments(xmlPath);
+    }
+
+    // Configure Swagger to handle XML properly
+    c.UseInlineDefinitionsForEnums();
 });
 
 var app = builder.Build();
