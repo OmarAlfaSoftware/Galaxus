@@ -88,3 +88,16 @@ public class IncomingDocumentController : ControllerBase
         }
     }
 }
+/*AutoMapper.AutoMapperMappingException
+     HResult=0x80131500
+     Message=Error mapping types.
+     Source=AutoMapper
+     StackTrace:
+      at GalaxusIntegration.Application.Services.Processors.OrderProcessor.<ProcessAsync>d__4.MoveNext() in E:\Omar\Galaxus\src\GalaxusIntegration.Application\Services\Processors\OrderProcessor.cs:line 32
+   
+     This exception was originally thrown at this call stack:
+       [External Code]
+   
+   Inner Exception 1:
+   ArgumentException: Requested value 'standard' was not found.
+   */

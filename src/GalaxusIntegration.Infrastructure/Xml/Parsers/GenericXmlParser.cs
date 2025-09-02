@@ -116,6 +116,7 @@ public class GenericXmlParser : IXmlParser
         info.Language = GetElementValue(infoElement, "LANGUAGE", XmlNamespaces.BMECat);
         info.Currency = GetElementValue(infoElement, "CURRENCY", XmlNamespaces.BMECat);
         
+        
         // Parse date based on document type
         switch (typeInfo.Direction)
         {
@@ -133,10 +134,53 @@ public class GenericXmlParser : IXmlParser
         {
             info.Parties = ParseParties(partiesElement);
         }
-        
+        var headerudx=infoElement.Element(XName.Get("HEADER_UDX", XmlNamespaces.OpenTrans));
+        if (headerudx != null)
+        {
+            info.HeaderUDX = ParseHeaderUDX(headerudx);
+        }
+        var customerOrderRef=infoElement.Element(XName.Get("CUSTOMER_ORDER_REFERENCE", XmlNamespaces.OpenTrans));
+        if (customerOrderRef != null)
+        {
+            info.CustomerOrderReference = ParseCustomerOrderReference(customerOrderRef);
+        }
+        var orderParties= infoElement.Element(XName.Get("ORDER_PARTIES_REFERENCE", XmlNamespaces.OpenTrans));
+        if (orderParties != null)
+        {
+            info.OrderPartiesReference = ParseOrderPartiesReference(orderParties);
+        }
+
         return info;
     }
-    
+    private OrderPartiesReference ParseOrderPartiesReference(XElement orderPartiesRefElement)
+    {
+        return new OrderPartiesReference
+        {
+            BuyerIdRef = GetElementValue(orderPartiesRefElement, "BUYER_IDREF", XmlNamespaces.BMECat),
+            SupplierIdRef = GetElementValue(orderPartiesRefElement, "SUPPLIER_IDREF", XmlNamespaces.BMECat),
+
+        };
+    }
+    private CustomerOrderRefernce ParseCustomerOrderReference(XElement customerOrderRefElement)
+    {
+        return new CustomerOrderRefernce
+        {
+            OrderId = GetElementValue(customerOrderRefElement, "ORDER_ID"),
+        };
+    }
+    private HeaderUDX ParseHeaderUDX(XElement headerUdxElement)
+    {
+        return new HeaderUDX
+        {
+            CustomerType = GetElementValue(headerUdxElement, "UDX.DG.CUSTOMER_TYPE"),
+            DeliveryType = GetElementValue(headerUdxElement, "UDX.DG.DELIVERY_TYPE"),
+            SaturdayDeliveryAllowed = GetElementValue(headerUdxElement, "UDX.DG.IS_SATURDAY_ALLOWED") == "true",
+            IsCollectiveOrder = GetElementValue(headerUdxElement, "UDX.DG.IS_COLLECTIVE_ORDER") == "true",
+            EndCustomerOrderReference = GetElementValue(headerUdxElement, "UDX.DG.CUSTOMER_ORDER_REF"),
+            PhysicalDeliveryNoteRequired = GetElementValue(headerUdxElement, "UDX.DG.PHYSICAL_DELIVERY_NOTE_REQUIRED") == "Required"
+        };
+    }
+
     private Parties ParseParties(XElement partiesElement)
     {
         var parties = new Parties

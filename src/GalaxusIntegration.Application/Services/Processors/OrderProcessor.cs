@@ -1,5 +1,6 @@
 using AutoMapper;
 using GalaxusIntegration.Application.DTOs.Internal;
+using GalaxusIntegration.Application.Strategy_Builder;
 using GalaxusIntegration.Core.Entities;
 using GalaxusIntegration.Shared.Enum;
 using Microsoft.Extensions.Logging;
@@ -8,16 +9,16 @@ namespace GalaxusIntegration.Application.Services.Processors;
 
 public class OrderProcessor : IDocumentProcessor
 {
-    private readonly IMapper _mapper;
+    private readonly EntityBuilderStrategy _entityBuilderStrategy;
     private readonly IOrderService _orderService;
     private readonly ILogger<OrderProcessor> _logger;
     
     public OrderProcessor(
-        IMapper mapper,
+        EntityBuilderStrategy strategy,
         IOrderService orderService,
         ILogger<OrderProcessor> logger)
     {
-        _mapper = mapper;
+        _entityBuilderStrategy = strategy;
         _orderService = orderService;
         _logger = logger;
     }
@@ -27,10 +28,11 @@ public class OrderProcessor : IDocumentProcessor
         try
         {
             _logger.LogInformation($"Processing order: {document.Header?.Info?.OrderId}");
-            
+            var strategy=_entityBuilderStrategy.GetStrategy(0);
             // Map to domain entity
-            var order = _mapper.Map<Order>(document);
+            var orderObject = await  strategy.Build(document);
             
+            var order= orderObject as Order;
             // Process business logic
             await _orderService.ProcessOrderAsync(order);
             

@@ -10,7 +10,7 @@ public class UnifiedDocumentDTO
     public string? Version { get; set; }
     public string? Type { get; set; }
 
-    public DocumentHeader Header { get; set; } = new();
+    public DocumentHeader? Header { get; set; } = new();
     public DocumentItemList? ItemList { get; set; }
     public DocumentSummary? Summary { get; set; }
     public Dictionary<string, object>? ExtendedProperties { get; set; }
@@ -52,7 +52,7 @@ public class DocumentInfo
 
 public class DocumentItemList
 {
-    public List<DocumentItem> Items { get; set; } = new();
+    public List<DocumentItem>? Items { get; set; } = new();
 }
 
 public class DocumentItem
@@ -100,12 +100,25 @@ public class PartyId
 public class Address
 {
     public string? Name { get; set; }
-    public string? Street { get; set; }
-    public string? City { get; set; }
+    public string? Name2 { get; set; }
+	public string? Name3 { get; set; }
+    public string? Department { get; set; }
+    public ContactDetails? ContactDetails { get; set; }
+	public string? Street { get; set; }
+    public string? BoxNo { get; set; }
+	public string? City { get; set; }
     public string? Zip { get; set; }
     public string? Country { get; set; }
-    public string? Phone { get; set; }
+    public string? CountryCoded { get; set; }
+	public string? Phone { get; set; }
     public string? Email { get; set; }
+    public string? VatId { get; set; }
+}
+public class ContactDetails
+{
+    public string? Title { get; set; }
+    public string? FirstName { get; set; }
+    public string? ContactName { get; set; }
 }
 
 public class ProductDetails
@@ -131,8 +144,8 @@ public class ProductPriceFix
 
 public class DeliveryDate
 {
-    public DateTime? Date { get; set; }
-    public string? Type { get; set; }
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
 }
 
 public class OrderPartiesReference
@@ -144,7 +157,7 @@ public class OrderPartiesReference
 public class CustomerOrderRefernce
 {
     public string? OrderId { get; set; }
-    public string? OrderItemId { get; set; }
+  
 }
 
 public class HeaderUDX

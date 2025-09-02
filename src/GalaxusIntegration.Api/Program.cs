@@ -5,6 +5,8 @@ using GalaxusIntegration.Application.Mappings;
 using GalaxusIntegration.Application.Services;
 using GalaxusIntegration.Application.Services.Processors;
 using GalaxusIntegration.Application.Mappings.Profiles;
+using GalaxusIntegration.Application.Strategy_Builder;
+using GalaxusIntegration.Application.Strategy_Builder.Entity_Builder;
 using GalaxusIntegration.Infrastructure.Database;
 using GalaxusIntegration.Infrastructure.Excel_files;
 using GalaxusIntegration.Infrastructure.Xml.Builders;
@@ -41,7 +43,7 @@ builder.Services.AddScoped<IDocumentProcessorFactory, DocumentProcessorFactory>(
 builder.Services.AddScoped<IOrderService, OrderService>();
 
 // Mapping services (scan Application + API assemblies for profiles)
-builder.Services.AddAutoMapper(cfg => { }, typeof(IncomingMappingProfile).Assembly, typeof(Program).Assembly);
+builder.Services.AddAutoMapper(cfg => { }, typeof(IncomingMappingProfile).Assembly, typeof(Program).Assembly,typeof(UnifiedToOrderProfile).Assembly);
 builder.Services.AddScoped<IGalaxusDocumentMapper, GalaxusDocumentMapper>();
 
 // HTTP client for external API
@@ -50,7 +52,7 @@ builder.Services.AddHttpClient("GalaxusAPI", client =>
     client.BaseAddress = new Uri(builder.Configuration["GalaxusAPI:BaseUrl"] ?? "https://api.galaxus.ch");
     client.DefaultRequestHeaders.Add("Accept", "application/xml");
 });
-
+builder.Services.AddScoped<EntityBuilderStrategy>();
 // Legacy services (keep for backward compatibility)
 builder.Services.AddScoped<IDocumentProcessorFactory, DocumentProcessorFactory>();
 builder.Services.AddScoped<OrderProcessor>();

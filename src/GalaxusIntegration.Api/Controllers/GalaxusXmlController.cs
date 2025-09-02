@@ -1,6 +1,8 @@
 using System.Text;
 using GalaxusIntegration.Application.DTOs.Internal;
 using GalaxusIntegration.Application.Mappings;
+using GalaxusIntegration.Application.DTOs.Outgoing;
+using GalaxusIntegration.Application.DTOs.PartialDTOs;
 using GalaxusIntegration.Infrastructure.Xml.Builders;
 using GalaxusIntegration.Infrastructure.Xml.Parsers;
 using GalaxusIntegration.Shared.Enum;
@@ -51,13 +53,66 @@ public class GalaxusXmlController : ControllerBase
     [HttpPost("send/{documentType}")]
     public IActionResult SendDocument([FromRoute] DocumentType documentType, [FromBody] UnifiedDocumentDTO unified)
     {
-        // For now, just return a stub response since the legacy mapper is not compatible
-        // In a real implementation, you would use the new MappingOrchestrator
-        _logger.LogInformation("Sending {Type} document", documentType);
-        return Ok(new { 
-            documentType, 
-            message = "Document processing not yet implemented with new XML integration system",
-            received = true 
-        });
+        try
+        {
+            if (unified == null)
+                return BadRequest(new { error = "Request body is required" });
+
+            object dto = documentType switch
+            {
+                DocumentType.ORDERRESPONSE => BuildOrderResponse(unified),
+                // Extend here for other outgoing types when needed
+                _ => throw new NotSupportedException($"Sending {documentType} is not yet supported")
+            };
+
+            var xml = _xmlBuilder.Build(dto, documentType);
+            _logger.LogInformation("Built {Type} xml payload of length {Len}", documentType, xml.Length);
+
+            return Content(xml, "application/xml");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error building {Type} xml", documentType);
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    private OrderResponseDTO BuildOrderResponse(UnifiedDocumentDTO unified)
+    {
+        var items = unified.ItemList?.Items ?? new List<DocumentItem>();
+        return new OrderResponseDTO
+        {
+            OrderResponseHeader = new OrderResponseHeader
+            {
+                OrderResponseInfo = new OrderResponseInfo
+                {
+                    OrderId = unified.Header?.Info?.OrderId,
+                    OrderResponseDate = unified.Header?.Info?.DocumentDate ?? DateTime.UtcNow,
+                    SupplierOrderId = null
+                }
+            },
+            OrderResponseItemList = new OrderResponseItemList
+            {
+                Items = items.Select(i => new OrderResponseItem
+                {
+                    ProductId = ToProductDetails(i.ProductId),
+                    Quantity = i.Quantity ?? 0,
+                    // DeliveryDate mapping optional; omit if absent in UnifiedDocumentDTO
+                    DeliveryDate = null
+                }).ToList()
+            }
+        };
+    }
+
+    private GalaxusIntegration.Application.DTOs.PartialDTOs.ProductDetails? ToProductDetails(GalaxusIntegration.Application.DTOs.Internal.ProductDetails? src)
+    {
+        if (src == null) return null;
+        return new GalaxusIntegration.Application.DTOs.PartialDTOs.ProductDetails
+        {
+            SupplierPid = src.SupplierPid != null ? new SupplierPid { Type = src.SupplierPid.Type ?? string.Empty, Value = src.SupplierPid.Value ?? string.Empty } : null,
+            InternationalPid = src.InternationalPid != null ? new InternationalPid { Type = src.InternationalPid.Type ?? string.Empty, Value = src.InternationalPid.Value ?? string.Empty } : null,
+            BuyerPid = src.BuyerPid != null ? new BuyerPid { Type = src.BuyerPid.Type ?? string.Empty, Value = src.BuyerPid.Value ?? string.Empty } : null,
+            DescriptionShort = src.DescriptionShort ?? string.Empty
+        };
     }
 }

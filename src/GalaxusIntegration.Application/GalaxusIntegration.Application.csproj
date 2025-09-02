@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="DTOs\Shared\" />
+    <Folder Include="Strategy Entity Builder\Entity Builder\" />
     <Folder Include="Use Cases\" />
   </ItemGroup>
 

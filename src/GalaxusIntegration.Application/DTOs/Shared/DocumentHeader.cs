@@ -81,7 +81,7 @@ public class DocumentInfo
     public CustomerOrderRefernce CustomerOrderReference { get; set; }
     public OrderPartiesReference OrderPartiesReference { get; set; }
     public string Currency { get; set; }
-    public HeaderUDX HeaderUDX { get; set; }
+    public DTOs.PartialDTOs.HeaderUDX HeaderUDX { get; set; }
     public string ShipmentId { get; set; }
     public string TrackingTracingUrl { get; set; }
 }

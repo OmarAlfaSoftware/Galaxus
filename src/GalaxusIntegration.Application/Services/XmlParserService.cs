@@ -150,11 +150,11 @@ public class XmlParserService : IXmlParserService
 
     private Parties ParseParties(XmlNode partiesNode)
     {
-        var parties = new Parties { PartyList = new List<Party>() };
+        var parties = new Parties { PartyList = new List<DTOs.PartialDTOs.Party>() };
 
         foreach (XmlNode partyNode in partiesNode.SelectNodes("*[local-name()='PARTY']"))
         {
-            var party = new Party
+            var party = new DTOs.PartialDTOs.Party
             {
                 PartyRole = GetNodeValue(partyNode, "PARTY_ROLE"),
                 PartyIds = new List<PartyId>()
@@ -372,9 +372,9 @@ public class XmlParserService : IXmlParserService
         return reference;
     }
 
-    private HeaderUDX ParseHeaderUDX(XmlNode udxNode)
+    private DTOs.PartialDTOs.HeaderUDX ParseHeaderUDX(XmlNode udxNode)
     {
-        var headerUdx = new HeaderUDX
+        var headerUdx = new DTOs.PartialDTOs. HeaderUDX
         {
             CustomerType = GetNodeValue(udxNode, "UDX.DG.CUSTOMER_TYPE"),
             DeliveryType = GetNodeValue(udxNode, "UDX.DG.DELIVERY_TYPE"),
