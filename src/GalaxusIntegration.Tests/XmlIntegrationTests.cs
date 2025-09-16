@@ -101,7 +101,7 @@ public class XmlIntegrationTests
         var documentType = _parser.IdentifyDocumentType(xmlContent);
 
         // Assert
-        Assert.Equal(DocumentType.RETURNREGISTRATION, documentType);
+        Assert.Equal(DocumentType.RETURN_REGISTRATION, documentType);
     }
 
     [Fact]

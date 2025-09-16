@@ -38,9 +38,20 @@ builder.Services.AddScoped<IXmlParser, GenericXmlParser>();
 builder.Services.AddScoped<IXmlBuilder, NamespaceAwareXmlBuilder>();
 
 // Document processors
-builder.Services.AddScoped<IDocumentProcessor, OrderProcessor>();
+builder.Services.AddScoped<IDocumentProcessor,OrderProcessor>();
+builder.Services.AddScoped<IDocumentProcessor,OrderResponseProcessor>();
+builder.Services.AddScoped<IDocumentProcessor,DispatchNotificationProcessor>();
+builder.Services.AddScoped<IDocumentProcessor,InvoiceProcessor>();
+builder.Services.AddScoped<IDocumentProcessor,ReturnRegistrationProcessor>();
+builder.Services.AddScoped<IDocumentProcessor,CancelRequestProcessor>();
+
 builder.Services.AddScoped<IDocumentProcessorFactory, DocumentProcessorFactory>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderResponseService, OrderResponseService>();
+builder.Services.AddScoped<ICancelRequestService, CancelRequestService>();
+builder.Services.AddScoped<IShippingService, ShippingService>();
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<IReturnService, ReturnService>();
 
 // Mapping services (scan Application + API assemblies for profiles)
 builder.Services.AddAutoMapper(cfg => { }, typeof(IncomingMappingProfile).Assembly, typeof(Program).Assembly,typeof(UnifiedToOrderProfile).Assembly);

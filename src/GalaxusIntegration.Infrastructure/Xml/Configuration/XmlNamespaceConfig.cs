@@ -18,7 +18,7 @@ public class XmlNamespaceConfig
     private void InitializeConfigurations()
     {
         // Order Response configuration
-        Configurations[DocumentType.ORDERRESPONSE] = new NamespaceConfiguration
+        Configurations[DocumentType.ORDER_RESPONSE] = new NamespaceConfiguration
         {
             DefaultNamespace = XmlNamespaces.OpenTrans,
             Namespaces = new Dictionary<string, string>
@@ -72,7 +72,7 @@ public class XmlNamespaceConfig
         };
         
         // Return Registration configuration
-        Configurations[DocumentType.RETURNREGISTRATION] = new NamespaceConfiguration
+        Configurations[DocumentType.RETURN_REGISTRATION] = new NamespaceConfiguration
         {
             DefaultNamespace = XmlNamespaces.OpenTrans,
             Namespaces = new Dictionary<string, string>
@@ -89,7 +89,7 @@ public class XmlNamespaceConfig
         };
         
         // Dispatch Notification configuration
-        Configurations[DocumentType.DISPATCHNOTIFICATION] = new NamespaceConfiguration
+        Configurations[DocumentType.DISPATCH_NOTIFICATION] = new NamespaceConfiguration
         {
             DefaultNamespace = XmlNamespaces.OpenTrans,
             Namespaces = new Dictionary<string, string>
@@ -104,7 +104,7 @@ public class XmlNamespaceConfig
         };
         
         // Cancel Request configuration
-        Configurations[DocumentType.CANCELREQUEST] = new NamespaceConfiguration
+        Configurations[DocumentType.CANCEL_REQUEST] = new NamespaceConfiguration
         {
             DefaultNamespace = XmlNamespaces.OpenTrans,
             Namespaces = new Dictionary<string, string>
@@ -121,7 +121,7 @@ public class XmlNamespaceConfig
         };
         
         // Cancel Confirmation configuration
-        Configurations[DocumentType.CANCELCONFIRMATION] = new NamespaceConfiguration
+        Configurations[DocumentType.CANCEL_CONFIRMATION] = new NamespaceConfiguration
         {
             DefaultNamespace = XmlNamespaces.OpenTrans,
             Namespaces = new Dictionary<string, string>
@@ -136,7 +136,7 @@ public class XmlNamespaceConfig
         };
         
         // Supplier Cancel Notification configuration
-        Configurations[DocumentType.SUPPLIERCANCELNOTIFICATION] = new NamespaceConfiguration
+        Configurations[DocumentType.SUPPLIER_CANCEL_NOTIFICATION] = new NamespaceConfiguration
         {
             DefaultNamespace = XmlNamespaces.OpenTrans,
             Namespaces = new Dictionary<string, string>
@@ -151,7 +151,7 @@ public class XmlNamespaceConfig
         };
         
         // Supplier Return Notification configuration
-        Configurations[DocumentType.SUPPLIERRETURNNOTIFICATION] = new NamespaceConfiguration
+        Configurations[DocumentType.SUPPLIER_RETURN_NOTIFICATION] = new NamespaceConfiguration
         {
             DefaultNamespace = XmlNamespaces.OpenTrans,
             Namespaces = new Dictionary<string, string>

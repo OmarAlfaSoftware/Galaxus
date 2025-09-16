@@ -10,5 +10,7 @@ public class OrderHistory
 
     [XmlElement("ORDER_DATE")]
     public DateTime? OrderDate { get; set; }
+    [XmlElement("SUPPLIER_ORDER_ID")]
+    public string SupplierOrderId { get; set; }
 }
 

@@ -20,7 +20,7 @@ namespace GalaxusIntegration.Api.Controllers
             return Ok();
         }
         [HttpPost("{type}")]
-        public async Task<ActionResult> UploadFile(ProductDataType type)
+        public async Task<ActionResult<string>> UploadFile(ProductDataType type)
         {
             // Handle file upload
             try
@@ -31,7 +31,7 @@ namespace GalaxusIntegration.Api.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
         }
 

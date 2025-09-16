@@ -28,7 +28,7 @@ public class OrderProcessor : IDocumentProcessor
         try
         {
             _logger.LogInformation($"Processing order: {document.Header?.Info?.OrderId}");
-            var strategy=_entityBuilderStrategy.GetStrategy(0);
+            var strategy=_entityBuilderStrategy.GetStrategy(document.DocumentType);
             // Map to domain entity
             var orderObject = await  strategy.Build(document);
             
