@@ -214,7 +214,7 @@ public class UnifiedToOrderProfile : Profile
         CreateMap<GalaxusIntegration.Application.DTOs.Internal.Parties, GalaxusIntegration.Application.DTOs.PartialDTOs.Parties>()
             .ForMember(d => d.PartyList, opt => opt.MapFrom(s => s.PartyList));
 
-        CreateMap<GalaxusIntegration.Application.DTOs.Internal.Party, GalaxusIntegration.Application.DTOs.PartialDTOs.Party>()
+        CreateMap<GalaxusIntegration.Application.DTOs.Internal.DocumentParty, GalaxusIntegration.Application.DTOs.PartialDTOs.Party>()
             .ForMember(d => d.PartyRole, opt => opt.MapFrom(s => s.PartyRole))
             .ForMember(d => d.PartyIds, opt => opt.MapFrom(s => s.PartyIds))
             .ForMember(d => d.Address, opt => opt.MapFrom(s => s.Address));

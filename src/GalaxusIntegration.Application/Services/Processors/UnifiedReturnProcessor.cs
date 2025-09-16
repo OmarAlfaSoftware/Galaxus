@@ -13,7 +13,7 @@ public class UnifiedReturnProcessor : IUnifiedDocumentProcessor
         _logger = logger;
     }
 
-    public bool CanProcess(DocumentType type) => type == DocumentType.RETURNREGISTRATION;
+    public bool CanProcess(DocumentType type) => type == DocumentType.RETURN_REGISTRATION;
 
     public Task<ProcessingResult> ProcessAsync(UnifiedDocumentDTO document)
     {

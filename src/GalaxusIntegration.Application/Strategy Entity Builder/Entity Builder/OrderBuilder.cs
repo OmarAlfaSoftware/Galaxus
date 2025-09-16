@@ -56,6 +56,8 @@ public class OrderBuilder : IEntityBuilder
                 var addr = p.Address;
                 var party = new Core.Entities.Party
                 {
+                    PartyRole=p.PartyRole,
+                    PartyHeaders=p.PartyIds.Select(z=>new PartyHeader() { PartyType=z.Type,PartyValue=z.Value}).ToList(),
                     PartyData = new PartyData
                     {
                         Name = addr?.Name,

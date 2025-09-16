@@ -60,7 +60,7 @@ public class GalaxusXmlController : ControllerBase
 
             object dto = documentType switch
             {
-                DocumentType.ORDERRESPONSE => BuildOrderResponse(unified),
+                DocumentType.ORDER_RESPONSE => BuildOrderResponse(unified),
                 // Extend here for other outgoing types when needed
                 _ => throw new NotSupportedException($"Sending {documentType} is not yet supported")
             };

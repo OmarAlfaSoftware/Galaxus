@@ -25,21 +25,21 @@ public class DocumentTypeRegistry
                 RequiredNamespaces = new[] { XmlNamespaces.BMECat },
                 RequiredFields = new[] { "ORDER_ID", "ORDER_DATE", "PARTIES" }
             },
-            [DocumentType.RETURNREGISTRATION] = new DocumentTypeInfo
+            [DocumentType.RETURN_REGISTRATION] = new DocumentTypeInfo
             {
                 RootElement = "RETURNREGISTRATION",
                 Direction = DocumentDirection.Incoming,
                 RequiredNamespaces = new[] { XmlNamespaces.BMECat },
                 RequiredFields = new[] { "ORDER_ID", "RETURNREGISTRATION_ID", "SHIPMENT_ID" }
             },
-            [DocumentType.DISPATCHNOTIFICATION] = new DocumentTypeInfo
+            [DocumentType.DISPATCH_NOTIFICATION] = new DocumentTypeInfo
             {
                 RootElement = "DISPATCHNOTIFICATION",
                 Direction = DocumentDirection.Incoming,
                 RequiredNamespaces = new[] { XmlNamespaces.BMECat },
                 RequiredFields = new[] { "DISPATCHNOTIFICATION_ID", "SHIPMENT_ID" }
             },
-            [DocumentType.ORDERRESPONSE] = new DocumentTypeInfo
+            [DocumentType.ORDER_RESPONSE] = new DocumentTypeInfo
             {
                 RootElement = "ORDERRESPONSE",
                 Direction = DocumentDirection.Outgoing,
@@ -52,25 +52,25 @@ public class DocumentTypeRegistry
                 RequiredNamespaces = new[] { XmlNamespaces.BMECat },
                 RequiredFields = new[] { "INVOICE_ID", "INVOICE_DATE", "VAT_ID" }
             },
-            [DocumentType.CANCELREQUEST] = new DocumentTypeInfo
+            [DocumentType.CANCEL_REQUEST] = new DocumentTypeInfo
             {
                 RootElement = "CANCELREQUEST",
                 Direction = DocumentDirection.Outgoing,
                 RequiredNamespaces = new[] { XmlNamespaces.BMECat }
             },
-            [DocumentType.CANCELCONFIRMATION] = new DocumentTypeInfo
+            [DocumentType.CANCEL_CONFIRMATION] = new DocumentTypeInfo
             {
                 RootElement = "CANCELCONFIRMATION",
                 Direction = DocumentDirection.Outgoing,
                 RequiredNamespaces = new[] { XmlNamespaces.BMECat }
             },
-            [DocumentType.SUPPLIERCANCELNOTIFICATION] = new DocumentTypeInfo
+            [DocumentType.SUPPLIER_CANCEL_NOTIFICATION] = new DocumentTypeInfo
             {
                 RootElement = "SUPPLIERCANCELNOTIFICATION",
                 Direction = DocumentDirection.Outgoing,
                 RequiredNamespaces = new[] { XmlNamespaces.BMECat }
             },
-            [DocumentType.SUPPLIERRETURNNOTIFICATION] = new DocumentTypeInfo
+            [DocumentType.SUPPLIER_RETURN_NOTIFICATION] = new DocumentTypeInfo
             {
                 RootElement = "SUPPLIERRETURNNOTIFICATION",
                 Direction = DocumentDirection.Outgoing,

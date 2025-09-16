@@ -22,14 +22,15 @@ public class Order : BaseDocument
 }
 public class Party
 {
+    public string PartyRole { get; set; } 
     public List<PartyHeader>? PartyHeaders { get; set; }
     public PartyData? PartyData { get; set; }
 }
 
 public class PartyHeader
 {
-    public string? PartyId { get; set; }
-    public string? PartyRole { get; set; }
+    public string? PartyType { get; set; }
+    public string? PartyValue { get; set; }
 }
 public class PartyData
 {

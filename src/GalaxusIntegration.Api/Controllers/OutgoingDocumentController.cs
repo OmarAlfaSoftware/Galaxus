@@ -79,12 +79,12 @@ public class OutgoingDocumentController : ControllerBase
     {
         return type switch
         {
-            DocumentType.ORDERRESPONSE => "/api/order/response",
+            DocumentType.ORDER_RESPONSE => "/api/order/response",
             DocumentType.INVOICE => "/api/invoice/create",
-            DocumentType.CANCELREQUEST => "/api/cancel/request",
-            DocumentType.CANCELCONFIRMATION => "/api/cancel/confirmation",
-            DocumentType.SUPPLIERCANCELNOTIFICATION => "/api/supplier/cancel",
-            DocumentType.SUPPLIERRETURNNOTIFICATION => "/api/supplier/return",
+            DocumentType.CANCEL_REQUEST => "/api/cancel/request",
+            DocumentType.CANCEL_CONFIRMATION => "/api/cancel/confirmation",
+            DocumentType.SUPPLIER_CANCEL_NOTIFICATION => "/api/supplier/cancel",
+            DocumentType.SUPPLIER_RETURN_NOTIFICATION => "/api/supplier/return",
             _ => throw new NotSupportedException($"No endpoint configured for {type}")
         };
     }

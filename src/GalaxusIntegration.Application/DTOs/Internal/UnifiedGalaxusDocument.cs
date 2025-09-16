@@ -26,7 +26,7 @@ public class UnifiedGalaxusDocument
     public string? DeliveryNoteId { get; set; }
 
     // Parties and references
-    public List<Party>? Parties { get; set; }
+    public List<DocumentParty>? Parties { get; set; }
     public OrderPartiesReference? OrderPartiesReference { get; set; }
     public CustomerOrderRefernce? CustomerOrderReference { get; set; }
     public HeaderUDX? HeaderUDX { get; set; }

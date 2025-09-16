@@ -40,14 +40,19 @@ public class DocumentInfo
 
     // Dispatch specific
     public string? DispatchNotificationId { get; set; }
-    public string? ShipmentId { get; set; }
+    public string? InfoId { get; set; }
+    public string? ShipmentCarrier { get; set; }
     public string? TrackingUrl { get; set; }
+
 
     // Complex
     public Parties? Parties { get; set; }
     public OrderPartiesReference? OrderPartiesReference { get; set; }
     public CustomerOrderRefernce? CustomerOrderReference { get; set; }
     public HeaderUDX? HeaderUDX { get; set; }
+    public  OrderHistory OrderHistory { get; set; }
+    public DeliveryDate DeliveryDate { get;  set; }
+    public List<Remark> Remarks { get;  set; }
 }
 
 public class DocumentItemList
@@ -64,14 +69,52 @@ public class DocumentItem
     public ProductPriceFix? ProductPriceFix { get; set; }
     public decimal? PriceLineAmount { get; set; }
     public int? ReturnReason { get; set; }
+    public string OrderId { get; set; }
+    public string DeliveryNoteId { get; set; }
     public DeliveryDate? DeliveryDate { get; set; }
+    public DocumentItemLogisticDetails? LogisticDetails { get; set; }
+    
 }
+public class DocumentItemLogisticDetails
+{
+    public DocumentItemPackageInfo? PackageInfo { get; set; }
+}
+public class DocumentItemPackageInfo 
+{
+    public List<DocumentItemPackage> Packages { get; set; } = new();
+}
+public class DocumentItemPackage 
+{
+    public string PackageId { get; set; }
+    public int Quantity  { get; set; }
 
+}
 public class DocumentSummary
 {
     public int TotalItemNum { get; set; }
     public decimal? TotalAmount { get; set; }
+    public decimal? TotalPrice { get; set; }
+    public SummaryAllowOrCharge AllowOrChargeFix { get; set; }
+    public SummaryTotalTax  TotalTax { get; set; }
 }
+public class SummaryTotalTax
+{
+    public decimal? TaxRate { get; internal set; }
+    public decimal? TaxAmount { get; internal set; }
+}
+public class SummaryAllowOrCharge 
+{
+    public List<AllowOrChargeItem> AllowOrChargeItems { get; set; }
+    public double? Total { get; set; }
+}
+public class AllowOrChargeItem 
+{
+    public string Type { get; set; }
+    public string Name { get; set; }
+    public double Amount { get; set; }
+}
+
+
 
 // Supporting classes
 public class ControlInfo
@@ -81,10 +124,10 @@ public class ControlInfo
 
 public class Parties
 {
-    public List<Party> PartyList { get; set; } = new();
+    public List<DocumentParty> PartyList { get; set; } = new();
 }
 
-public class Party
+public class DocumentParty
 {
     public string? PartyRole { get; set; }
     public List<PartyId> PartyIds { get; set; } = new();
@@ -140,6 +183,7 @@ public class ProductPriceFix
 {
     public decimal Amount { get; set; }
     public string? Currency { get; set; }
+    public TaxDetailsFix TaxDetailsFix { get; set; }
 }
 
 public class DeliveryDate

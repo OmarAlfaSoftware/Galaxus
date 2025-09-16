@@ -1,13 +1,10 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.Serialization;
 using GalaxusIntegration.Application.DTOs.Internal;
 using GalaxusIntegration.Infrastructure.Xml.Configuration;
-using Microsoft.Extensions.Logging;
 using GalaxusIntegration.Shared.Constants;
 using GalaxusIntegration.Shared.Enum;
+using Microsoft.Extensions.Logging;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace GalaxusIntegration.Infrastructure.Xml.Parsers;
 
@@ -36,45 +33,45 @@ public class GenericXmlParser : IXmlParser
             Version = root.Attribute("version")?.Value,
             Type = root.Attribute("type")?.Value
         };
-        
+
         ParseDocumentByType(root, unifiedDoc, documentType);
-        
+
         return unifiedDoc;
     }
-    
+
     public T Parse<T>(string xmlContent) where T : class
     {
         var serializer = new XmlSerializer(typeof(T));
         using var stringReader = new StringReader(xmlContent);
         return serializer.Deserialize(stringReader) as T;
     }
-    
+
     public DocumentType IdentifyDocumentType(string xmlContent)
     {
         var doc = XDocument.Parse(xmlContent);
         var rootName = doc.Root.Name.LocalName;
-        
+
         return _typeRegistry.GetDocumentTypeByRootElement(rootName);
     }
-    
+
     private void ParseDocumentByType(XElement root, UnifiedDocumentDTO doc, DocumentType type)
     {
         var typeInfo = GalaxusIntegration.Shared.Constants.DocumentTypeConstants.DocumentTypeInfoMap[type];
-        
+
         // Parse header
         var headerElement = root.Element(XName.Get(typeInfo.HeaderElement, XmlNamespaces.OpenTrans));
         if (headerElement != null)
         {
             doc.Header = ParseHeader(headerElement, typeInfo);
         }
-        
+
         // Parse item list
         var itemListElement = root.Element(XName.Get(typeInfo.ItemListElement, XmlNamespaces.OpenTrans));
         if (itemListElement != null)
         {
             doc.ItemList = ParseItemList(itemListElement, typeInfo);
         }
-        
+
         // Parse summary
         var summaryElement = root.Element(XName.Get(typeInfo.SummaryElement, XmlNamespaces.OpenTrans));
         if (summaryElement != null)
@@ -82,11 +79,11 @@ public class GenericXmlParser : IXmlParser
             doc.Summary = ParseSummary(summaryElement);
         }
     }
-    
+
     private DocumentHeader ParseHeader(XElement headerElement, GalaxusIntegration.Shared.Constants.DocumentTypeInfo typeInfo)
     {
         var header = new DocumentHeader();
-        
+
         // Parse CONTROL_INFO
         var controlInfo = headerElement.Element(XName.Get("CONTROL_INFO", XmlNamespaces.OpenTrans));
         if (controlInfo != null)
@@ -96,27 +93,27 @@ public class GenericXmlParser : IXmlParser
                 GenerationDate = ParseDateTime(controlInfo.Element(XName.Get("GENERATION_DATE", XmlNamespaces.OpenTrans))?.Value)
             };
         }
-        
+
         // Parse INFO element
         var infoElement = headerElement.Element(XName.Get(typeInfo.InfoElement, XmlNamespaces.OpenTrans));
         if (infoElement != null)
         {
             header.Info = ParseDocumentInfo(infoElement, typeInfo);
         }
-        
+
         return header;
     }
-    
+
     private DocumentInfo ParseDocumentInfo(XElement infoElement, GalaxusIntegration.Shared.Constants.DocumentTypeInfo typeInfo)
     {
         var info = new DocumentInfo();
-        
+
         // Parse common fields
         info.OrderId = GetElementValue(infoElement, "ORDER_ID");
         info.Language = GetElementValue(infoElement, "LANGUAGE", XmlNamespaces.BMECat);
         info.Currency = GetElementValue(infoElement, "CURRENCY", XmlNamespaces.BMECat);
-        
-        
+
+
         // Parse date based on document type
         switch (typeInfo.Direction)
         {
@@ -127,24 +124,24 @@ public class GenericXmlParser : IXmlParser
                 info.DocumentDate = ParseDateTime(GetElementValue(infoElement, "RESPONSE_DATE"));
                 break;
         }
-        
+
         // Parse parties
         var partiesElement = infoElement.Element(XName.Get("PARTIES", XmlNamespaces.OpenTrans));
         if (partiesElement != null)
         {
             info.Parties = ParseParties(partiesElement);
         }
-        var headerudx=infoElement.Element(XName.Get("HEADER_UDX", XmlNamespaces.OpenTrans));
+        var headerudx = infoElement.Element(XName.Get("HEADER_UDX", XmlNamespaces.OpenTrans));
         if (headerudx != null)
         {
             info.HeaderUDX = ParseHeaderUDX(headerudx);
         }
-        var customerOrderRef=infoElement.Element(XName.Get("CUSTOMER_ORDER_REFERENCE", XmlNamespaces.OpenTrans));
+        var customerOrderRef = infoElement.Element(XName.Get("CUSTOMER_ORDER_REFERENCE", XmlNamespaces.OpenTrans));
         if (customerOrderRef != null)
         {
             info.CustomerOrderReference = ParseCustomerOrderReference(customerOrderRef);
         }
-        var orderParties= infoElement.Element(XName.Get("ORDER_PARTIES_REFERENCE", XmlNamespaces.OpenTrans));
+        var orderParties = infoElement.Element(XName.Get("ORDER_PARTIES_REFERENCE", XmlNamespaces.OpenTrans));
         if (orderParties != null)
         {
             info.OrderPartiesReference = ParseOrderPartiesReference(orderParties);
@@ -185,45 +182,45 @@ public class GenericXmlParser : IXmlParser
     {
         var parties = new Parties
         {
-            PartyList = new List<Party>()
+            PartyList = new List<DocumentParty>()
         };
-        
+
         foreach (var partyElement in partiesElement.Elements(XName.Get("PARTY", XmlNamespaces.OpenTrans)))
         {
             parties.PartyList.Add(ParseParty(partyElement));
         }
-        
+
         return parties;
     }
-    
-    private Party ParseParty(XElement partyElement)
+
+    private DocumentParty ParseParty(XElement partyElement)
     {
-        var party = new Party
+        var party = new DocumentParty
         {
             PartyRole = GetElementValue(partyElement, "PARTY_ROLE"),
-                PartyIds = new List<PartyId>()
-            };
+            PartyIds = new List<PartyId>()
+        };
 
         // Parse multiple PARTY_ID elements
         foreach (var partyIdElement in partyElement.Elements(XName.Get("PARTY_ID", XmlNamespaces.BMECat)))
+        {
+            party.PartyIds.Add(new PartyId
             {
-                party.PartyIds.Add(new PartyId
-                {
                 Type = partyIdElement.Attribute("type")?.Value,
                 Value = partyIdElement.Value
             });
         }
-        
+
         // Parse address
         var addressElement = partyElement.Element(XName.Get("ADDRESS", XmlNamespaces.OpenTrans));
         if (addressElement != null)
         {
             party.Address = ParseAddress(addressElement);
         }
-        
+
         return party;
     }
-    
+
     private Address ParseAddress(XElement addressElement)
     {
         return new Address
@@ -237,22 +234,22 @@ public class GenericXmlParser : IXmlParser
             Email = GetElementValue(addressElement, "EMAIL", XmlNamespaces.BMECat)
         };
     }
-    
+
     private DocumentItemList ParseItemList(XElement itemListElement, GalaxusIntegration.Shared.Constants.DocumentTypeInfo typeInfo)
     {
         var itemList = new DocumentItemList
         {
             Items = new List<DocumentItem>()
         };
-        
+
         foreach (var itemElement in itemListElement.Elements(XName.Get(typeInfo.ItemElement, XmlNamespaces.OpenTrans)))
         {
             itemList.Items.Add(ParseItem(itemElement));
         }
-        
+
         return itemList;
     }
-    
+
     private DocumentItem ParseItem(XElement itemElement)
     {
         var item = new DocumentItem
@@ -312,7 +309,7 @@ public class GenericXmlParser : IXmlParser
             Currency = GetElementValue(priceElement, "CURRENCY", XmlNamespaces.BMECat)
         };
     }
-    
+
     private DocumentSummary ParseSummary(XElement summaryElement)
     {
         return new DocumentSummary
@@ -321,23 +318,23 @@ public class GenericXmlParser : IXmlParser
             TotalAmount = ParseDecimal(GetElementValue(summaryElement, "TOTAL_AMOUNT"))
         };
     }
-    
+
     // Helper methods
     private string GetElementValue(XElement parent, string elementName, string nameSpace = XmlNamespaces.OpenTrans)
     {
         return parent.Element(XName.Get(elementName, nameSpace))?.Value;
     }
-    
+
     private DateTime? ParseDateTime(string value)
     {
         return DateTime.TryParse(value, out var result) ? result : null;
     }
-    
+
     private decimal? ParseDecimal(string value)
     {
         return decimal.TryParse(value, out var result) ? result : null;
     }
-    
+
     private int? ParseInt(string value)
     {
         return int.TryParse(value, out var result) ? result : null;

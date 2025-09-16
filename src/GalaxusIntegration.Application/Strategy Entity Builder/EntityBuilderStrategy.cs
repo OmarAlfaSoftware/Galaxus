@@ -12,19 +12,30 @@ namespace GalaxusIntegration.Application.Strategy_Builder
 {
     public class EntityBuilderStrategy
     {
-
-
-        public IEntityBuilder GetStrategy(DocumentType type) 
+        private readonly Dictionary<DocumentType, IEntityBuilder> _builders;
+        public EntityBuilderStrategy()
         {
-            switch (type)
+            _builders = new Dictionary<DocumentType, IEntityBuilder>
+        {
+            { DocumentType.ORDER, new OrderBuilder() },
+            { DocumentType.CANCEL_REQUEST, new CancelRequestBuilder() },
+            { DocumentType.RETURN_REGISTRATION, new ReturnRegistrationBuilder() },
+            { DocumentType.ORDER_RESPONSE, new OrderResponseBuilder() },
+            { DocumentType.DISPATCH_NOTIFICATION, new DispatchNotificationBuilder() },
+            { DocumentType.INVOICE, new InvoiceBuilder() },
+          //  { DocumentType.CANCEL_CONFIRMATION, new CancelConfirmationBuilder() },
+          //  { DocumentType.SUPPLIER_CANCEL_NOTIFICATION, new SupplierCancelNotificationBuilder() },
+          //  { DocumentType.SUPPLIER_RETURN_NOTIFICATION, new SupplierReturnNotificationBuilder() }
+        };
+        }
+        public IEntityBuilder GetStrategy(DocumentType type)
+        {
+            if (_builders.TryGetValue(type, out var builder))
             {
-                case DocumentType.ORDER:
-                    return new OrderBuilder();
-                    break;
-                default: break;
+                return builder;
             }
 
-            return null;
+            throw new NotSupportedException($"No builder found for document type: {type}");
         }
     }
 }
