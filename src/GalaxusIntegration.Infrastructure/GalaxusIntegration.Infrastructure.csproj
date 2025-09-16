@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="7.0.9" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GalaxusIntegration.Core\GalaxusIntegration.Core.csproj" />
+    <ProjectReference Include="..\GalaxusIntegration.Application\GalaxusIntegration.Application.csproj" />
+    <ProjectReference Include="..\GalaxusIntegration.Shared\GalaxusIntegration.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="FTP\" />
+    <Folder Include="Database\" />
+    <Folder Include="Excel files\" />
+    <Folder Include="External APIs\" />
+  </ItemGroup>
+
+</Project>

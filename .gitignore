@@ -1,0 +1,69 @@
+# Environment 
+.env 
+venv/ 
+__pycache__/ 
+*.pyc 
+ 
+# Credentials 
+config/credentials.* 
+*_credentials.* 
+ 
+# Test files 
+test_*.csv 
+test_*.xml 
+*.log 
+ 
+# IDE 
+.idea/ 
+.vscode/ 
+*.swp 
+ 
+# OS 
+.DS_Store 
+Thumbs.db 
+# .NET
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Visual Studio
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+wwwroot/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Secrets
+appsettings.Development.json
+appsettings.Local.json
+*.pfx
+.env
+
+# Test Results
+TestResults/
+*.trx
+
+# User-specific files
+*.rsuser
+*.dbmdl
+*.jfm
