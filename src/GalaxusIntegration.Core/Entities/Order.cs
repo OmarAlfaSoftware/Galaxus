@@ -18,8 +18,16 @@ public class Order : BaseDocument
     public List<Party>? Parties { get; set; } = new();
     public List<OrderItem>? Items { get; set; } = new();
     public DeliveryInfo? DeliveryInfo { get; set; }
+    public OrderSummary OrderSummary { get; set; }
 
 }
+
+public class OrderSummary
+{
+    public int TotalItemCount { get; set; }
+    public double TotalAmount { get;set; }
+}
+
 public class Party
 {
     public string PartyRole { get; set; } 
@@ -72,6 +80,8 @@ public class OrderItem
     public string? Unit { get; set; }
     public decimal? UnitPrice { get; set; }
     public decimal? TotalPrice { get; set; }
+    public DeliveryInfo DeliveryInfo { get; set; } = new DeliveryInfo();
+    public TotalTax Tax { get; set; }
     
 }
 

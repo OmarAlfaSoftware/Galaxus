@@ -13,24 +13,30 @@ public class OrderBuilder : IEntityBuilder
     {
         if (document == null) throw new ArgumentNullException(nameof(document));
 
-        var order = new Order();
 
         // ===== Basic header info =====
         var header = document.Header;
         var info = header?.Metadata;
         var ctrl = header?.ControlInfo;
         var summary = document.Summary;
-
-        order.GenerationDate = ctrl?.GenerationDate;
-        order.OrderId = info?.OrderId ?? info?.DocumentId;
-        order.CustOrderId = info?.CustomerOrderReference?.OrderId;
-        order.OrderDate = info?.OrderDate ?? info?.DocumentDate ?? DateTime.MinValue;
-        order.Language = info?.Language;
-        order.BuyerId = info?.OrderPartyReferences?.BuyerReferenceId;
-        order.SupplierId = info?.OrderPartyReferences?.SupplierReferenceId;
-        order.TotalAmount = summary?.TotalGrossAmount ?? 0m;
-        order.Currency = info?.Currency;
-
+        var order = new Order
+        {
+            GenerationDate = ctrl?.GenerationDate,
+            OrderId = info?.OrderId ?? info?.DocumentId,
+            CustOrderId = info?.CustomerOrderReference?.OrderId,
+            OrderDate = info?.OrderDate ?? info?.DocumentDate ?? DateTime.MinValue,
+            Language = info?.Language,
+            BuyerId = info?.OrderPartyReferences?.BuyerReferenceId,
+            SupplierId = info?.OrderPartyReferences?.SupplierReferenceId,
+            TotalAmount = summary?.TotalGrossAmount ?? 0m,
+            Currency = info?.Currency,
+            HeaderUDX=new(),
+            Parties=new(),
+            Items=new(),
+            DeliveryInfo=new(),
+            OrderSummary=new()
+            
+        };
         // ===== HeaderUDX =====
         if (info?.UserDefinedExtensions != null)
         {
@@ -72,6 +78,7 @@ public class OrderBuilder : IEntityBuilder
                 VatId = address.VatIdentificationNumber,
                 Zip = address.PostalCode,
             };
+            order.Parties.Add(invoiceParty);
 
         }
         // ===== Items =====
@@ -92,12 +99,25 @@ public class OrderBuilder : IEntityBuilder
                     Quantity = i.Quantity ?? 0m,
                     Unit = i.OrderUnit,
                     UnitPrice = i.LineItemPrice != null ? (decimal)i.LineItemPrice.Amount : 0m,
-                    TotalPrice = i?.LineTotalAmount ?? 0
+                    TotalPrice = i?.LineTotalAmount ?? 0,
+                    DeliveryInfo=new() 
+                    {
+                        StartDate= i?.ItemDeliveryDateRange?.EarliestDate,
+                        EndDate=i?.ItemDeliveryDateRange?.LatestDate
+                    },
+                    Tax = new() 
+                    {
+                        TaxAmount=i?.LineItemPrice?.TaxDetails?.Amount,
+                        TaxRate=i?.LineItemPrice?.TaxDetails?.Rate,
+                    }
                 };
 
                 order.Items.Add(item);
             }
         }
+        // ===== Order Summary ==============
+        order.OrderSummary.TotalAmount = (double)document.Summary.TotalGrossAmount;
+        order.OrderSummary.TotalItemCount = document.Summary.TotalItemCount;
 
         // ===== DeliveryInfo aggregate =====
         var starts = document.ItemList?.Items?

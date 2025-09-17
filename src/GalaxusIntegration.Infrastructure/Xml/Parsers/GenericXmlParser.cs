@@ -249,13 +249,14 @@ public class GenericXmlParser : IXmlParser
     private List<Parties> ParseParties(XElement partiesElement)
     {
         var result= new List<Parties>();
-        foreach (var element in partiesElement.Elements(XName.Get("Party")))
+        var partiesXML = partiesElement.Elements(XName.Get("PARTY", XmlNamespaces.OpenTrans));
+        foreach (var element in partiesXML)
         {
 
         var parties = new Parties
         {
             PartyList = new List<DocumentParty>(),
-            Role = GetElementValue(element, "PARTY_ROLE"),
+            Role = GetElementValue(element, "PARTY_ROLE",XmlNamespaces.OpenTrans),
         };
      
 
@@ -270,7 +271,7 @@ public class GenericXmlParser : IXmlParser
         }
 
         // Parse address
-        var addressElement = partiesElement.Element(XName.Get("ADDRESS", XmlNamespaces.OpenTrans));
+        var addressElement = element.Element(XName.Get("ADDRESS", XmlNamespaces.OpenTrans));
         if (addressElement != null)
         {
             parties.Address = ParseAddress(addressElement);
@@ -285,6 +286,14 @@ public class GenericXmlParser : IXmlParser
 
     private Address ParseAddress(XElement addressElement)
     {
+        var contact = new ContactDetails();
+        var contactElement = addressElement.Element(XName.Get("CONTACT_DETAILS",XmlNamespaces.OpenTrans));
+        if(contactElement!=null)
+        {
+            contact.Title = GetElementValue(contactElement, "TITLE", XmlNamespaces.BMECat);
+            contact.FirstName = GetElementValue(contactElement, "FIRST_NAME", XmlNamespaces.BMECat);
+            contact.LastName = GetElementValue(contactElement, "CONTACT_NAME", XmlNamespaces.BMECat);
+        }
         return new Address
         {
             Name = GetElementValue(addressElement, "NAME", XmlNamespaces.BMECat),
@@ -299,7 +308,8 @@ public class GenericXmlParser : IXmlParser
             CountryCode = GetElementValue(addressElement, "COUNTRY_CODED", XmlNamespaces.BMECat),
             PhoneNumber = GetElementValue(addressElement, "PHONE", XmlNamespaces.BMECat),
             EmailAddress = GetElementValue(addressElement, "EMAIL", XmlNamespaces.BMECat),
-            VatIdentificationNumber = GetElementValue(addressElement, "VAT_ID", XmlNamespaces.BMECat)
+            VatIdentificationNumber = GetElementValue(addressElement, "VAT_ID", XmlNamespaces.BMECat),
+            Contact=contact
         };
     }
 
