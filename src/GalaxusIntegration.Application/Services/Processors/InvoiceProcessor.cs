@@ -23,11 +23,11 @@ public class InvoiceProcessor : IDocumentProcessor
         _logger = logger;
     }
 
-    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDTO document)
+    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDto document)
     {
         try
         {
-            _logger.LogInformation($"Processing invoice: {document.Header?.Info?.InfoId}");
+            _logger.LogInformation($"Processing invoice: {document.Header?.Metadata?.InvoiceId}");
 
             var strategy = _entityBuilderStrategy.GetStrategy(DocumentType.INVOICE);
             var invoiceObject = await strategy.Build(document);

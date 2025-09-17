@@ -9,7 +9,7 @@ public class OrderBuilder : IEntityBuilder
     public OrderBuilder()
     {
     }
-    public async Task<object> Build(UnifiedDocumentDTO document) 
+    public async Task<object> Build(UnifiedDocumentDto document) 
     {
         if (document == null) throw new ArgumentNullException(nameof(document));
 
@@ -17,7 +17,7 @@ public class OrderBuilder : IEntityBuilder
 
         // ===== Basic header info =====
         var header = document.Header;
-        var info = header?.Info;
+        var info = header?.Metadata;
         var ctrl = header?.ControlInfo;
         var summary = document.Summary;
 
@@ -26,74 +26,54 @@ public class OrderBuilder : IEntityBuilder
         order.CustOrderId = info?.CustomerOrderReference?.OrderId;
         order.OrderDate = info?.OrderDate ?? info?.DocumentDate ?? DateTime.MinValue;
         order.Language = info?.Language;
-        order.BuyerId = info?.OrderPartiesReference?.BuyerIdRef;
-        order.SupplierId = info?.OrderPartiesReference?.SupplierIdRef;
-        order.TotalAmount = summary?.TotalAmount ?? 0m;
+        order.BuyerId = info?.OrderPartyReferences?.BuyerReferenceId;
+        order.SupplierId = info?.OrderPartyReferences?.SupplierReferenceId;
+        order.TotalAmount = summary?.TotalGrossAmount ?? 0m;
         order.Currency = info?.Currency;
 
         // ===== HeaderUDX =====
-        if (info?.HeaderUDX != null)
+        if (info?.UserDefinedExtensions != null)
         {
             order.HeaderUDX = new Core.Entities.HeaderUDX
             {
-                CustomerType = info.HeaderUDX.CustomerType,
-                DeliveryType = info.HeaderUDX.DeliveryType,
-                IsSaturdayAllowed = info.HeaderUDX.SaturdayDeliveryAllowed,
-                IsCollectiveOrder = info.HeaderUDX.IsCollectiveOrder,
-                CustomerOrderRef = info.HeaderUDX.EndCustomerOrderReference,
-                PhysicalDeliveryNote = info.HeaderUDX.PhysicalDeliveryNoteRequired 
+                CustomerType = info?.UserDefinedExtensions.CustomerType,
+                DeliveryType = info?.UserDefinedExtensions.DeliveryType,
+                IsSaturdayAllowed = info?.UserDefinedExtensions.IsSaturdayDeliveryAllowed,
+                IsCollectiveOrder = info?.UserDefinedExtensions.IsCollectiveOrder,
+                CustomerOrderRef = info?.UserDefinedExtensions.EndCustomerOrderReference,
+                PhysicalDeliveryNote = info?.UserDefinedExtensions.IsPhysicalDeliveryNoteRequired 
             };
         }
 
         // ===== Parties =====
         order.Parties = new List<Core.Entities.Party>();
-        if (info?.Parties?.PartyList != null)
+        foreach (DTOs.Internal.Parties party in info?.Parties)
         {
-            foreach (var p in info.Parties.PartyList)
+            var invoiceParty = new Core.Entities.Party();
+            invoiceParty.PartyRole = party.Role;
+            invoiceParty.PartyHeaders = party.PartyList.Select(z => new PartyHeader() { PartyValue = z.PartyIdValue, PartyType = z.PartyIdType }).ToList();
+            var address = party.Address;
+            invoiceParty.PartyData = new()
             {
-                if (p == null) continue;
+                Name = address.Name,
+                Name2 = address.NameLine2,
+                Name3 = address.NameLine3,
+                BoxNo = address.PoBoxNumber,
+                City = address.City,
+                ContactName = address.Contact.LastName,
+                Country = address.Country,
+                CountryCode = address.CountryCode,
+                Department = address.Department,
+                Email = address.EmailAddress,
+                FirstName = address.Contact.FirstName,
+                Phone = address.PhoneNumber,
+                Street = address.Street,
+                Title = address.Contact.Title,
+                VatId = address.VatIdentificationNumber,
+                Zip = address.PostalCode,
+            };
 
-                var addr = p.Address;
-                var party = new Core.Entities.Party
-                {
-                    PartyRole=p.PartyRole,
-                    PartyHeaders=p.PartyIds.Select(z=>new PartyHeader() { PartyType=z.Type,PartyValue=z.Value}).ToList(),
-                    PartyData = new PartyData
-                    {
-                        Name = addr?.Name,
-                        Name2 = addr?.Name2,
-                        Name3 = addr?.Name3,
-                        Department = addr?.Department,
-                        Title = addr?.ContactDetails?.Title,
-                        FirstName = addr?.ContactDetails?.FirstName,
-                        ContactName = addr?.ContactDetails?.ContactName,
-                        Street = addr?.Street,
-                        Zip = addr?.Zip,
-                        BoxNo = addr?.BoxNo,
-                        City = addr?.City,
-                        CountryCode = addr?.CountryCoded,
-                        Country = addr?.Country,
-                        Email = addr?.Email,
-                        Phone = addr?.Phone,
-                        VatId = addr?.VatId
-                    }
-                };
-
-                // NOTE: PartyHeaders لازم تكون public في الـ Domain
-                // لو عندك setter:
-                // party.PartyHeaders = new List<PartyHeader>
-                // {
-                //     new PartyHeader
-                //     {
-                //         PartyId   = p.PartyIds?.FirstOrDefault()?.Value,
-                //         PartyRole = p.PartyRole
-                //     }
-                // };
-
-                order.Parties.Add(party);
-            }
         }
-
         // ===== Items =====
         order.Items = new List<OrderItem>();
         if (document.ItemList?.Items != null)
@@ -105,16 +85,14 @@ public class OrderBuilder : IEntityBuilder
                 var item = new OrderItem
                 {
                     LineItemId = i.LineItemId ?? string.Empty,
-                    SupplierId = i.ProductId?.SupplierPid?.Value ?? string.Empty,
-                    InternationalId = i.ProductId?.InternationalPid?.Value ?? string.Empty,
-                    BuyerId = i.ProductId?.BuyerPid?.Value ?? string.Empty,
-                    Description = i.ProductId?.DescriptionShort,
+                    SupplierId = i.ProductDetails?.SupplierProductId?.Value ?? string.Empty,
+                    InternationalId = i.ProductDetails?.InternationalProductId?.Value ?? string.Empty,
+                    BuyerId = i.ProductDetails?.BuyerProductId?.Value ?? string.Empty,
+                    Description = i.ProductDetails?.ShortDescription,
                     Quantity = i.Quantity ?? 0m,
                     Unit = i.OrderUnit,
-                    UnitPrice = i.ProductPriceFix != null ? (decimal)i.ProductPriceFix.Amount : 0m,
-                    TotalPrice = i.PriceLineAmount.HasValue
-                                        ? (decimal)i.PriceLineAmount.Value
-                                        : (i.Quantity ?? 0m) * (i.ProductPriceFix != null ? (decimal)i.ProductPriceFix.Amount : 0m)
+                    UnitPrice = i.LineItemPrice != null ? (decimal)i.LineItemPrice.Amount : 0m,
+                    TotalPrice = i?.LineTotalAmount ?? 0
                 };
 
                 order.Items.Add(item);
@@ -123,12 +101,12 @@ public class OrderBuilder : IEntityBuilder
 
         // ===== DeliveryInfo aggregate =====
         var starts = document.ItemList?.Items?
-                         .Select(x => x?.DeliveryDate?.StartDate)
+                         .Select(x => x?.ItemDeliveryDateRange?.EarliestDate)
                          .Where(d => d.HasValue)
                          .Select(d => d!.Value)
                          .ToList() ?? new List<DateTime>();
         var ends = document.ItemList?.Items?
-                         .Select(x => x?.DeliveryDate?.EndDate)
+                         .Select(x => x?.ItemDeliveryDateRange?.LatestDate)
                          .Where(d => d.HasValue)
                          .Select(d => d!.Value)
                          .ToList() ?? new List<DateTime>();

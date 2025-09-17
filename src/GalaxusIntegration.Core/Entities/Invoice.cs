@@ -9,8 +9,7 @@ namespace GalaxusIntegration.Core.Entities
         public DateTime GenerationDate { get; set; }
         public object DeliveryNoteId { get; set; }
         public string Currency { get; set; }
-        public object OrderId { get; set; }
-        public object SupplierOrderId { get; set; }
+        public List<InvoiceHistoryItem> HistoryItems { get; set; }
         public object DeliveryStartDate { get; set; }
         public object DeliveryEndDate { get; set; }
         public List<Party> Parties { get; set; }
@@ -25,6 +24,11 @@ namespace GalaxusIntegration.Core.Entities
         public TotalTax TotalTax { get; set; }
         public bool RequiresPdf { get; set; }
         public string PdfPath { get; set; }
+    }
+    public class InvoiceHistoryItem 
+    {
+        public string OrderId { get; set; }
+        public string SupplierOrderId { get; set; }
     }
 
     public class TotalTax

@@ -23,11 +23,11 @@ public class ReturnRegistrationProcessor : IDocumentProcessor
         _logger = logger;
     }
 
-    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDTO document)
+    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDto document)
     {
         try
         {
-            _logger.LogInformation($"Processing return registration: {document.Header?.Info?.ReturnRegistrationId}");
+            _logger.LogInformation($"Processing return registration: {document.Header?.Metadata?.ReturnRegistrationId}");
 
             var strategy = _entityBuilderStrategy.GetStrategy(DocumentType.RETURN_REGISTRATION);
             var returnRegObject = await strategy.Build(document);

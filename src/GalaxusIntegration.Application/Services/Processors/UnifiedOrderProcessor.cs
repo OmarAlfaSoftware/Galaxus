@@ -16,9 +16,9 @@ public class UnifiedOrderProcessor : IUnifiedDocumentProcessor
 
     public bool CanProcess(DocumentType type) => type == DocumentType.ORDER;
 
-    public Task<ProcessingResult> ProcessAsync(UnifiedDocumentDTO document)
+    public Task<ProcessingResult> ProcessAsync(UnifiedDocumentDto document)
     {
-        var orderId = document.Header?.Info?.OrderId;
+        var orderId = document.Header?.Metadata.OrderId;
         var itemCount = document.ItemList?.Items?.Count ?? 0;
 
         _logger.LogInformation("Processed ORDER {OrderId} with {Count} items", orderId, itemCount);

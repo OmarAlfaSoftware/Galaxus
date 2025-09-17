@@ -8,14 +8,14 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder;
 
 public class OrderResponseBuilder : IEntityBuilder
 {
-    public async Task<object> Build(UnifiedDocumentDTO document)
+    public async Task<object> Build(UnifiedDocumentDto document)
     {
         if (document == null) throw new ArgumentNullException(nameof(document));
 
         var orderResponse = new OrderResponse();
 
         var header = document.Header;
-        var info = header?.Info;
+        var info = header?.Metadata;
 
         // Basic info
         orderResponse.OrderId = info?.OrderId;
@@ -32,12 +32,12 @@ public class OrderResponseBuilder : IEntityBuilder
 
                 var responseItem = new Core.Entities.OrderResponseItem
                 {
-                    ProductId = item.ProductId?.SupplierPid?.Value,
-                    InternationalId = item.ProductId?.InternationalPid?.Value,
-                    BuyerId = item.ProductId?.BuyerPid?.Value,
+                    ProductId = item.ProductDetails?.SupplierProductId?.Value,
+                    InternationalId = item.ProductDetails?.InternationalProductId?.Value,
+                    BuyerId = item.ProductDetails?.BuyerProductId?.Value,
                     Quantity = item.Quantity ?? 0m,
-                    DeliveryStartDate = item.DeliveryDate?.StartDate,
-                    DeliveryEndDate = item.DeliveryDate?.EndDate
+                    DeliveryStartDate = item.ItemDeliveryDateRange?.EarliestDate,
+                    DeliveryEndDate = item.ItemDeliveryDateRange?.LatestDate
                 };
 
                 orderResponse.ResponseItems.Add(responseItem);

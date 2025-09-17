@@ -6,6 +6,6 @@ namespace GalaxusIntegration.Application.Services.Processors;
 
 public interface IUnifiedDocumentProcessor
 {
-    Task<ProcessingResult> ProcessAsync(UnifiedDocumentDTO document);
+    Task<ProcessingResult> ProcessAsync(UnifiedDocumentDto document);
     bool CanProcess(DocumentType type);
 }

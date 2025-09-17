@@ -23,9 +23,9 @@ namespace GalaxusIntegration.Application.Strategy_Builder
             { DocumentType.ORDER_RESPONSE, new OrderResponseBuilder() },
             { DocumentType.DISPATCH_NOTIFICATION, new DispatchNotificationBuilder() },
             { DocumentType.INVOICE, new InvoiceBuilder() },
-          //  { DocumentType.CANCEL_CONFIRMATION, new CancelConfirmationBuilder() },
-          //  { DocumentType.SUPPLIER_CANCEL_NOTIFICATION, new SupplierCancelNotificationBuilder() },
-          //  { DocumentType.SUPPLIER_RETURN_NOTIFICATION, new SupplierReturnNotificationBuilder() }
+            { DocumentType.CANCEL_CONFIRMATION, new CancelConfirmationBuilder() },
+            { DocumentType.SUPPLIER_CANCEL_NOTIFICATION, new SupplierCancelNotificationBuilder() },
+            { DocumentType.SUPPLIER_RETURN_NOTIFICATION, new SupplierReturnNotificationBuilder() }
         };
         }
         public IEntityBuilder GetStrategy(DocumentType type)

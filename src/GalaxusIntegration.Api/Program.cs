@@ -1,20 +1,17 @@
-using System.Reflection;
 using GalaxusIntegration.Application.Factories;
 using GalaxusIntegration.Application.Interfaces;
 using GalaxusIntegration.Application.Mappings;
 using GalaxusIntegration.Application.Services;
 using GalaxusIntegration.Application.Services.Processors;
-using GalaxusIntegration.Application.Mappings.Profiles;
 using GalaxusIntegration.Application.Strategy_Builder;
-using GalaxusIntegration.Application.Strategy_Builder.Entity_Builder;
 using GalaxusIntegration.Infrastructure.Database;
 using GalaxusIntegration.Infrastructure.Excel_files;
 using GalaxusIntegration.Infrastructure.Xml.Builders;
 using GalaxusIntegration.Infrastructure.Xml.Configuration;
 using GalaxusIntegration.Infrastructure.Xml.Parsers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,12 +35,15 @@ builder.Services.AddScoped<IXmlParser, GenericXmlParser>();
 builder.Services.AddScoped<IXmlBuilder, NamespaceAwareXmlBuilder>();
 
 // Document processors
-builder.Services.AddScoped<IDocumentProcessor,OrderProcessor>();
-builder.Services.AddScoped<IDocumentProcessor,OrderResponseProcessor>();
-builder.Services.AddScoped<IDocumentProcessor,DispatchNotificationProcessor>();
-builder.Services.AddScoped<IDocumentProcessor,InvoiceProcessor>();
-builder.Services.AddScoped<IDocumentProcessor,ReturnRegistrationProcessor>();
-builder.Services.AddScoped<IDocumentProcessor,CancelRequestProcessor>();
+builder.Services.AddScoped<IDocumentProcessor, OrderProcessor>();
+builder.Services.AddScoped<IDocumentProcessor, OrderResponseProcessor>();
+builder.Services.AddScoped<IDocumentProcessor, DispatchNotificationProcessor>();
+builder.Services.AddScoped<IDocumentProcessor, InvoiceProcessor>();
+builder.Services.AddScoped<IDocumentProcessor, ReturnRegistrationProcessor>();
+builder.Services.AddScoped<IDocumentProcessor, CancelRequestProcessor>();
+builder.Services.AddScoped<IDocumentProcessor, SupplierCancelNotificationProcessor>();
+builder.Services.AddScoped<IDocumentProcessor, SupplierReturnNotificationProcessor>();
+builder.Services.AddScoped<IDocumentProcessor, CancelConfirmationProcessor>();
 
 builder.Services.AddScoped<IDocumentProcessorFactory, DocumentProcessorFactory>();
 builder.Services.AddScoped<IOrderService, OrderService>();
@@ -52,9 +52,11 @@ builder.Services.AddScoped<ICancelRequestService, CancelRequestService>();
 builder.Services.AddScoped<IShippingService, ShippingService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IReturnService, ReturnService>();
+builder.Services.AddScoped<ICancelConfirmationService, CancelConfirmationService>();
+builder.Services.AddScoped<ISupplierCancelService, SupplierCancelService>();
+builder.Services.AddScoped<ISupplierReturnService, SupplierReturnService>();
 
 // Mapping services (scan Application + API assemblies for profiles)
-builder.Services.AddAutoMapper(cfg => { }, typeof(IncomingMappingProfile).Assembly, typeof(Program).Assembly,typeof(UnifiedToOrderProfile).Assembly);
 builder.Services.AddScoped<IGalaxusDocumentMapper, GalaxusDocumentMapper>();
 
 // HTTP client for external API

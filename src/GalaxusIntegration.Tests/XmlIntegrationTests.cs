@@ -76,11 +76,11 @@ public class XmlIntegrationTests
         Assert.NotNull(result);
         Assert.Equal(DocumentType.ORDER, result.DocumentType);
         Assert.Equal("2.1", result.Version);
-        Assert.Equal("standard", result.Type);
-        Assert.Equal("12345", result.Header.Info.OrderId);
+        Assert.Equal("standard", result.SubType);
+        Assert.Equal("12345", result.Header.Metadata.OrderId);
         Assert.Equal(1, result.ItemList.Items.Count);
-        Assert.Equal(1, result.Summary.TotalItemNum);
-        Assert.Equal(100.00m, result.Summary.TotalAmount);
+        Assert.Equal(1, result.Summary.TotalItemCount);
+        Assert.Equal(100.00m, result.Summary.TotalGrossAmount);
     }
 
     [Fact]
@@ -123,7 +123,7 @@ public class XmlIntegrationTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(DocumentType.ORDER, result.DocumentType);
-        Assert.Equal("12345", result.Header.Info.OrderId);
+        Assert.Equal("12345", result.Header.Metadata.OrderId);
         // Should not throw for missing optional elements
     }
 }
