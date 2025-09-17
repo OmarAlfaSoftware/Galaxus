@@ -14,6 +14,7 @@ namespace GalaxusIntegration.Core.Entities
         public ShipmentCarrierEnum ShipmentCarrier { get; set; }
         public List<DispatchItem> DispatchItems { get; set; } = new();
         public ProcessingStatus Status { get; set; }
+        public List<Party> Parties { get; set; }
     }
 
     public class DispatchItem

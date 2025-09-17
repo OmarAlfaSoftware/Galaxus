@@ -20,6 +20,8 @@ public class DispatchNotificationBuilder : IEntityBuilder
         dispatch.DispatchNotificationId = info?.DispatchNotificationId ?? GenerateDispatchId();
         dispatch.DispatchNotificationDate = info?.DocumentDate ?? DateTime.UtcNow;
         dispatch.GenerationDate = header?.ControlInfo?.GenerationDate ?? DateTime.UtcNow;
+        dispatch.Parties = new();
+       
 
         // Delivery party
         foreach (DTOs.Internal.Parties party in info?.Parties)
@@ -48,6 +50,7 @@ public class DispatchNotificationBuilder : IEntityBuilder
                 Zip = address.PostalCode,
             };
 
+            dispatch.Parties.Add(invoiceParty);
         }
 
         // Shipment info

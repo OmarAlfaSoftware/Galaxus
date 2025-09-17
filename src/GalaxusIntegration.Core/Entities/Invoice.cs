@@ -18,7 +18,7 @@ namespace GalaxusIntegration.Core.Entities
         public object ScorReference { get; set; }
         public object QrIban { get; set; }
         public List<InvoiceItem> InvoiceItems { get; set; }
-        public int? NetValueGoods { get; set; }
+        public double? NetValueGoods { get; set; }
         public decimal TotalAmount { get; set; }
         public List<AllowOrCharges> AllowOrCharges { get; set; }
         public TotalTax TotalTax { get; set; }
@@ -58,5 +58,7 @@ namespace GalaxusIntegration.Core.Entities
         public decimal PriceLineAmount { get; set; }
         public object OrderId { get; set; }
         public object DeliveryNoteId { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

@@ -21,9 +21,9 @@ public class ReturnRegistrationBuilder : IEntityBuilder
         returnReg.ReturnRegistrationId = info?.ReturnRegistrationId;
         returnReg.ReturnRegistrationDate = info?.ReturnRegistrationDate ?? DateTime.UtcNow;
         returnReg.Language = info?.Language;
-        returnReg.ShipmentId = info?.DeliveryNoteId;
+        returnReg.ShipmentId = info?.ShipmentId;
         returnReg.TrackingTracingUrl = info?.TrackingUrl;
-
+        returnReg.Parties = new();
         // Parties
         foreach (DTOs.Internal.Parties party in info?.Parties)
         {
@@ -50,7 +50,7 @@ public class ReturnRegistrationBuilder : IEntityBuilder
                 VatId = address.VatIdentificationNumber,
                 Zip = address.PostalCode,
             };
-
+            returnReg.Parties.Add(invoiceParty);
         }
 
         // Order parties reference

@@ -22,8 +22,9 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
             invoice.InvoiceId = info?.InvoiceId ?? GenerateInvoiceId();
             invoice.InvoiceDate = info?.DocumentDate ?? DateTime.UtcNow;
             invoice.GenerationDate = header?.ControlInfo?.GenerationDate ?? DateTime.UtcNow;
-            invoice.DeliveryNoteId = info?.DispatchNotificationId;
+            invoice.DeliveryNoteId = info?.DeliveryNoteId;
             invoice.Currency = info?.Currency ?? "CHF";
+            invoice.Parties = new();
 
             // Order history
             invoice.HistoryItems = info.OrderHistory.Select(z=>new InvoiceHistoryItem() { OrderId=z.OrderId,SupplierOrderId=z.SupplierOrderId}).ToList();
@@ -60,6 +61,7 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
                     VatId=address.VatIdentificationNumber,
                     Zip=address.PostalCode,
                 };
+                invoice.Parties.Add(invoiceParty);
 
             }
             // Remarks (QR codes for Swiss invoices)
@@ -96,6 +98,9 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
                         PriceLineAmount = item.LineTotalAmount ?? 0m,
                         OrderId = item?.ReferencedOrderId ,
                         DeliveryNoteId = item.DeliveryReference.DeliveryNoteId,
+                        StartDate=item?.ItemDeliveryDateRange?.EarliestDate,
+                        EndDate=item.ItemDeliveryDateRange.LatestDate,
+                        
                     };
 
                     invoice.InvoiceItems.Add(invoiceItem);
@@ -105,7 +110,7 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
             // Summary
             if (document.Summary != null)
             {
-                invoice.NetValueGoods = document.Summary?.TotalItemCount ?? 0;
+                invoice.NetValueGoods = (double?)(document.Summary?.TotalNetAmount ?? 0);
                 invoice.TotalAmount = document.Summary.TotalGrossAmount ?? 0m;
 
                 // Allow or charges (shipping costs, etc.)
@@ -117,11 +122,11 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
                 // Total tax
                 if (document.Summary.TotalTaxSummary != null)
                 {
-                    invoice.TotalTax = new Core.Entities.TotalTax
+                    invoice.TotalTax = document.Summary.TotalTaxSummary.TaxDetailsList.Select(y => new Core.Entities.TotalTax
                     {
-                        TaxRate = document.Summary.TotalTaxSummary.OverallTaxRate ?? 0m,
-                        TaxAmount = document.Summary.TotalTaxSummary.OverallTaxAmount ?? 0m
-                    };
+                        TaxRate = y.Rate ?? 0m,
+                        TaxAmount = y.Amount ?? 0m
+                    }).FirstOrDefault();
                 }
             }
 

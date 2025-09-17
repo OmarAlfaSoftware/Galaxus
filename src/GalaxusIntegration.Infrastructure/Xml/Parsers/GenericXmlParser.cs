@@ -101,6 +101,20 @@ public class GenericXmlParser : IXmlParser
             header.Metadata = ParseDocumentMetadata(infoElement, typeInfo);
         }
 
+        // Parse order history (from Invoice)
+        var orderHistoryElement = headerElement.Element(XName.Get("ORDER_HISTORY", XmlNamespaces.OpenTrans));
+        if (orderHistoryElement != null)
+        {
+            header.Metadata.OrderHistory = new List<OrderHistoryItem>
+     {
+         new OrderHistoryItem
+         {
+             OrderId = GetElementValue(orderHistoryElement, "ORDER_ID"),
+             SupplierOrderId = GetElementValue(orderHistoryElement, "SUPPLIER_ORDER_ID")
+         }
+     };
+        }
+
         return header;
     }
 
@@ -128,6 +142,7 @@ public class GenericXmlParser : IXmlParser
                 metadata.ReturnRegistrationId = GetElementValue(infoElement, "RETURNREGISTRATION_ID");
                 metadata.ReturnRegistrationDate = ParseDateTime(GetElementValue(infoElement, "RETURNREGISTRATION_DATE"));
                 metadata.TrackingUrl = GetElementValue(infoElement, "TRACKING_TRACING_URL");
+                metadata.ShipmentId = GetElementValue(infoElement, "SHIPMENT_ID");
                 break;
             case "INVOICE":
                 metadata.InvoiceId = GetElementValue(infoElement, "INVOICE_ID");
@@ -189,20 +204,6 @@ public class GenericXmlParser : IXmlParser
         if (orderParties != null)
         {
             metadata.OrderPartyReferences = ParseOrderPartyReferences(orderParties);
-        }
-
-        // Parse order history (from Invoice)
-        var orderHistoryElement = infoElement.Element(XName.Get("ORDER_HISTORY", XmlNamespaces.OpenTrans));
-        if (orderHistoryElement != null)
-        {
-            metadata.OrderHistory = new List<OrderHistoryItem>
-            {
-                new OrderHistoryItem
-                {
-                    OrderId = GetElementValue(orderHistoryElement, "ORDER_ID"),
-                    SupplierOrderId = GetElementValue(orderHistoryElement, "SUPPLIER_ORDER_ID")
-                }
-            };
         }
 
         // Parse remarks (from Invoice, with type)
@@ -313,20 +314,6 @@ public class GenericXmlParser : IXmlParser
         };
     }
 
-    // Parse contact details within address if present
-    private ContactDetails? ParseContactDetails(XElement addressElement)
-    {
-        var contactElement = addressElement.Element(XName.Get("CONTACT_DETAILS", XmlNamespaces.BMECat));
-        if (contactElement == null) return null;
-
-        return new ContactDetails
-        {
-            Title = GetElementValue(contactElement, "TITLE", XmlNamespaces.BMECat),
-            FirstName = GetElementValue(contactElement, "FIRST_NAME", XmlNamespaces.BMECat),
-            LastName = GetElementValue(contactElement, "CONTACT_NAME", XmlNamespaces.BMECat)
-        };
-    }
-
     private DocumentItemList ParseItemList(XElement itemListElement, GalaxusIntegration.Shared.Constants.DocumentTypeInfo typeInfo)
     {
         var itemList = new DocumentItemList
@@ -354,9 +341,13 @@ public class GenericXmlParser : IXmlParser
             ReferencedOrderId = GetElementValue(itemElement, "ORDER_ID"), // From ORDER_REFERENCE
             IsRequestAccepted = bool.Parse(GetElementValue(itemElement, "REQUESTACCEPTED") ?? "false"),
             ResponseComment = GetElementValue(itemElement, "RESPONSECOMMENT") ?? string.Empty,
-            ShortDescription = GetElementValue(itemElement, "DESCRIPTION_SHORT", XmlNamespaces.BMECat)
+            ShortDescription = GetElementValue(itemElement, "DESCRIPTION_SHORT", XmlNamespaces.BMECat),
         };
-
+        var orderRefrence = itemElement.Element(XName.Get("ORDER_REFERENCE", XmlNamespaces.OpenTrans));
+        if(orderRefrence!=null)
+        {
+            item.ReferencedOrderId = GetElementValue(orderRefrence, "ORDER_ID");
+        }
         // Parse PRODUCT_ID
         var productIdElement = itemElement.Element(XName.Get("PRODUCT_ID", XmlNamespaces.OpenTrans));
         if (productIdElement != null)
@@ -393,17 +384,27 @@ public class GenericXmlParser : IXmlParser
                     LatestDate = ParseDateTime(GetElementValue(deliveryRefElement, "DELIVERY_END_DATE"))
                 }
             };
+            var itemDeliveryElement = deliveryRefElement.Element(XName.Get("DELIVERY_DATE", XmlNamespaces.OpenTrans));
+            if (itemDeliveryElement != null)
+            {
+                item.ItemDeliveryDateRange = new DeliveryDateRange
+                {
+                    EarliestDate = ParseDateTime(GetElementValue(itemDeliveryElement, "DELIVERY_START_DATE")),
+                    LatestDate = ParseDateTime(GetElementValue(itemDeliveryElement, "DELIVERY_END_DATE")),
+                    Type = itemDeliveryElement.Attribute("type")?.Value
+                };
+            }
         }
 
         // Parse item delivery date range
-        var itemDeliveryElement = itemElement.Element(XName.Get("DELIVERY_DATE", XmlNamespaces.OpenTrans));
-        if (itemDeliveryElement != null)
+        var itemDeliveryDateRangeElement = itemElement.Element(XName.Get("DELIVERY_DATE", XmlNamespaces.OpenTrans));
+        if (itemDeliveryDateRangeElement != null)
         {
             item.ItemDeliveryDateRange = new DeliveryDateRange
             {
-                EarliestDate = ParseDateTime(GetElementValue(itemDeliveryElement, "DELIVERY_START_DATE")),
-                LatestDate = ParseDateTime(GetElementValue(itemDeliveryElement, "DELIVERY_END_DATE")),
-                Type = itemDeliveryElement.Attribute("type")?.Value
+                EarliestDate = ParseDateTime(GetElementValue(itemDeliveryDateRangeElement, "DELIVERY_START_DATE")),
+                LatestDate = ParseDateTime(GetElementValue(itemDeliveryDateRangeElement, "DELIVERY_END_DATE")),
+                Type = itemDeliveryDateRangeElement.Attribute("type")?.Value
             };
         }
 

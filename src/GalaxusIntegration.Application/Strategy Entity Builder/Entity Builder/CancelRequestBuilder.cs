@@ -47,6 +47,7 @@ public class CancelRequestBuilder : IEntityBuilder
 				VatId = address.VatIdentificationNumber,
 				Zip = address.PostalCode,
 			};
+            cancelRequest.Parties.Add(invoiceParty);
 
 		}
 		// Order parties reference
