@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using GalaxusIntegration.Application.DTOs.Order_Coming_Requests;
-using GalaxusIntegration.Application.DTOs.PartialDTOs;
-using GalaxusIntegration.Application.XML;
-
-namespace GalaxusIntegration.Application.Services
+﻿namespace GalaxusIntegration.Application.Services
 {
     public class OrderFilesServices
     {
@@ -151,7 +141,8 @@ namespace GalaxusIntegration.Application.Services
             var xmlString = xmlBuilder.BuildXML(order);
 
             return xmlString;
-            */ return "test";
+            */
+            return "test";
 
         }
     }

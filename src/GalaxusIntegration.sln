@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxusIntegration.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxusIntegration.Infrastructure", "GalaxusIntegration.Infrastructure\GalaxusIntegration.Infrastructure.csproj", "{ADA8F36E-0199-4F01-AC0A-3C6BE59FAF4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxusIntegration.Tests", "GalaxusIntegration.Tests\GalaxusIntegration.Tests.csproj", "{D2007C2A-B664-4D46-8206-970854FBBA9F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxusIntegration.Shared", "GalaxusIntegration.Shared\GalaxusIntegration.Shared.csproj", "{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}"
 EndProject
 Global
@@ -73,18 +71,6 @@ Global
 		{ADA8F36E-0199-4F01-AC0A-3C6BE59FAF4B}.Release|x64.Build.0 = Release|Any CPU
 		{ADA8F36E-0199-4F01-AC0A-3C6BE59FAF4B}.Release|x86.ActiveCfg = Release|Any CPU
 		{ADA8F36E-0199-4F01-AC0A-3C6BE59FAF4B}.Release|x86.Build.0 = Release|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Debug|x64.Build.0 = Debug|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Debug|x86.Build.0 = Debug|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Release|x64.ActiveCfg = Release|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Release|x64.Build.0 = Release|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Release|x86.ActiveCfg = Release|Any CPU
-		{D2007C2A-B664-4D46-8206-970854FBBA9F}.Release|x86.Build.0 = Release|Any CPU
 		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7FFED0D-5BD3-4496-9BB1-432B70E0CAE8}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -100,5 +86,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1980C932-2538-4D61-AE06-149B5FD7786B}
 	EndGlobalSection
 EndGlobal

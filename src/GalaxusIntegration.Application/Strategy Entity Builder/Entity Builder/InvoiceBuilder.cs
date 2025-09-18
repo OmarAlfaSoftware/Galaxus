@@ -1,6 +1,4 @@
 ﻿using GalaxusIntegration.Application.DTOs.Internal;
-using GalaxusIntegration.Application.DTOs.Outgoing;
-using GalaxusIntegration.Application.DTOs.PartialDTOs;
 using GalaxusIntegration.Application.Interfaces;
 using GalaxusIntegration.Core.Entities;
 
@@ -27,7 +25,7 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
             invoice.Parties = new();
 
             // Order history
-            invoice.HistoryItems = info.OrderHistory.Select(z=>new InvoiceHistoryItem() { OrderId=z.OrderId,SupplierOrderId=z.SupplierOrderId}).ToList();
+            invoice.HistoryItems = info.OrderHistory.Select(z => new InvoiceHistoryItem() { OrderId = z.OrderId, SupplierOrderId = z.SupplierOrderId }).ToList();
             // Delivery dates
             if (info?.DeliveryDateRange != null)
             {
@@ -36,12 +34,12 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
             }
 
             // Parties
-            foreach (DTOs.Internal.Parties party in info?.Parties) 
+            foreach (DTOs.Internal.Parties party in info?.Parties)
             {
-                var invoiceParty=new Core.Entities.Party();
+                var invoiceParty = new Core.Entities.Party();
                 invoiceParty.PartyRole = party.Role;
                 invoiceParty.PartyHeaders = party.PartyList.Select(z => new PartyHeader() { PartyValue = z.PartyIdValue, PartyType = z.PartyIdType }).ToList();
-                var address=party.Address;
+                var address = party.Address;
                 invoiceParty.PartyData = new()
                 {
                     Name = address.Name,
@@ -53,13 +51,13 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
                     Country = address.Country,
                     CountryCode = address.CountryCode,
                     Department = address.Department,
-                    Email=address.EmailAddress,
-                    FirstName=address.Contact.FirstName,
-                    Phone=address.PhoneNumber,
-                    Street=address.Street,
-                    Title=address.Contact.Title,
-                    VatId=address.VatIdentificationNumber,
-                    Zip=address.PostalCode,
+                    Email = address.EmailAddress,
+                    FirstName = address.Contact.FirstName,
+                    Phone = address.PhoneNumber,
+                    Street = address.Street,
+                    Title = address.Contact.Title,
+                    VatId = address.VatIdentificationNumber,
+                    Zip = address.PostalCode,
                 };
                 invoice.Parties.Add(invoiceParty);
 
@@ -79,7 +77,7 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
             }
 
             // Invoice items
-            invoice.InvoiceItems =new();
+            invoice.InvoiceItems = new();
             if (document.ItemList?.Items != null)
             {
                 foreach (var item in document.ItemList.Items)
@@ -93,14 +91,14 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
                         BuyerId = item.ProductDetails?.BuyerProductId?.Value,
                         Quantity = item.Quantity ?? 0m,
                         PriceAmount = item.LineItemPrice?.Amount ?? 0m,
-                        TaxAmount =(double)( item.LineItemPrice?.TaxDetails?.Amount?? 0),
+                        TaxAmount = (double)(item.LineItemPrice?.TaxDetails?.Amount ?? 0),
                         TaxRate = (double)(item.LineItemPrice?.TaxDetails?.Rate ?? 0),
                         PriceLineAmount = item.LineTotalAmount ?? 0m,
-                        OrderId = item?.ReferencedOrderId ,
+                        OrderId = item?.ReferencedOrderId,
                         DeliveryNoteId = item.DeliveryReference.DeliveryNoteId,
-                        StartDate=item?.ItemDeliveryDateRange?.EarliestDate,
-                        EndDate=item.ItemDeliveryDateRange.LatestDate,
-                        
+                        StartDate = item?.ItemDeliveryDateRange?.EarliestDate,
+                        EndDate = item.ItemDeliveryDateRange.LatestDate,
+
                     };
 
                     invoice.InvoiceItems.Add(invoiceItem);
@@ -116,7 +114,7 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
                 // Allow or charges (shipping costs, etc.)
                 if (document.Summary.AllowancesAndCharges != null)
                 {
-                    invoice.AllowOrCharges =document.Summary.AllowancesAndCharges.Items.Select(z=>new AllowOrCharges{Type=z.Type,Amount=(double)z.Amount,ChargeType=z.Name}).ToList();
+                    invoice.AllowOrCharges = document.Summary.AllowancesAndCharges.Items.Select(z => new AllowOrCharges { Type = z.Type, Amount = (double)z.Amount, ChargeType = z.Name }).ToList();
                 }
 
                 // Total tax
@@ -138,5 +136,5 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder
             return $"INV-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString("N")[..10].ToUpper()}";
         }
 
-         }
+    }
 }

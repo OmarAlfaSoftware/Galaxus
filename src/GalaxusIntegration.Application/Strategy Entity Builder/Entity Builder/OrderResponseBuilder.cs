@@ -1,6 +1,5 @@
 ﻿// src/GalaxusIntegration.Application/Strategy Entity Builder/Entity Builder/OrderResponseBuilder.cs
 using GalaxusIntegration.Application.DTOs.Internal;
-using GalaxusIntegration.Application.DTOs.Outgoing;
 using GalaxusIntegration.Application.Interfaces;
 using GalaxusIntegration.Core.Entities;
 

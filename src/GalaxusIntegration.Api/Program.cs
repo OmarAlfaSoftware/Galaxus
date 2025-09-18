@@ -1,6 +1,5 @@
 using GalaxusIntegration.Application.Factories;
 using GalaxusIntegration.Application.Interfaces;
-using GalaxusIntegration.Application.Mappings;
 using GalaxusIntegration.Application.Services;
 using GalaxusIntegration.Application.Services.Processors;
 using GalaxusIntegration.Application.Strategy_Builder;
@@ -56,8 +55,6 @@ builder.Services.AddScoped<ICancelConfirmationService, CancelConfirmationService
 builder.Services.AddScoped<ISupplierCancelService, SupplierCancelService>();
 builder.Services.AddScoped<ISupplierReturnService, SupplierReturnService>();
 
-// Mapping services (scan Application + API assemblies for profiles)
-builder.Services.AddScoped<IGalaxusDocumentMapper, GalaxusDocumentMapper>();
 
 // HTTP client for external API
 builder.Services.AddHttpClient("GalaxusAPI", client =>
