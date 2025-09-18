@@ -23,11 +23,11 @@ public class CancelRequestProcessor : IDocumentProcessor
         _logger = logger;
     }
 
-    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDTO document)
+    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDto document)
     {
         try
         {
-            _logger.LogInformation($"Processing cancel request for order: {document.Header?.Info?.OrderId}");
+            _logger.LogInformation($"Processing cancel request for order: {document.Header?.Metadata.OrderId}");
 
             var strategy = _entityBuilderStrategy.GetStrategy(DocumentType.CANCEL_REQUEST);
             var cancelRequestObject = await strategy.Build(document);

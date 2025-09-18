@@ -23,11 +23,11 @@ public class OrderProcessor : IDocumentProcessor
         _logger = logger;
     }
     
-    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDTO document)
+    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDto document)
     {
         try
         {
-            _logger.LogInformation($"Processing order: {document.Header?.Info?.OrderId}");
+            _logger.LogInformation($"Processing order: {document.Header?.Metadata.OrderId}");
             var strategy=_entityBuilderStrategy.GetStrategy(document.DocumentType);
             // Map to domain entity
             var orderObject = await  strategy.Build(document);

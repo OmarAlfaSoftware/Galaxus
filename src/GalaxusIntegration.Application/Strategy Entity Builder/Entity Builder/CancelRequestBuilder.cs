@@ -7,38 +7,54 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder;
 
 public class CancelRequestBuilder : IEntityBuilder
 {
-    public async Task<object> Build(UnifiedDocumentDTO document)
+    public async Task<object> Build(UnifiedDocumentDto document)
     {
         if (document == null) throw new ArgumentNullException(nameof(document));
 
         var cancelRequest = new CancelRequest();
 
         var header = document.Header;
-        var info = header?.Info;
+        var info = header?.Metadata;
 
         // Basic info
         cancelRequest.OrderId = info?.OrderId;
         cancelRequest.CancelRequestDate = info?.DocumentDate ?? DateTime.UtcNow;
         cancelRequest.Language = info?.Language;
 
-        // Parties
-        if (info?.Parties?.PartyList != null)
-        {
-            cancelRequest.Parties = new();
-            foreach (var p in info.Parties.PartyList)
-            {
-                if (p == null) continue;
+		// Parties
+		foreach (DTOs.Internal.Parties party in info?.Parties)
+		{
+			var invoiceParty = new Core.Entities.Party();
+			invoiceParty.PartyRole = party.Role;
+			invoiceParty.PartyHeaders = party.PartyList.Select(z => new PartyHeader() { PartyValue = z.PartyIdValue, PartyType = z.PartyIdType }).ToList();
+			var address = party.Address;
+			invoiceParty.PartyData = new()
+			{
+				Name = address.Name,
+				Name2 = address.NameLine2,
+				Name3 = address.NameLine3,
+				BoxNo = address.PoBoxNumber,
+				City = address.City,
+				ContactName = address.Contact.LastName,
+				Country = address.Country,
+				CountryCode = address.CountryCode,
+				Department = address.Department,
+				Email = address.EmailAddress,
+				FirstName = address.Contact.FirstName,
+				Phone = address.PhoneNumber,
+				Street = address.Street,
+				Title = address.Contact.Title,
+				VatId = address.VatIdentificationNumber,
+				Zip = address.PostalCode,
+			};
+            cancelRequest.Parties.Add(invoiceParty);
 
-                var party = MapParty(p);
-                cancelRequest.Parties.Add(party);
-            }
-        }
-
-        // Order parties reference
-        if (info?.OrderPartiesReference != null)
+		}
+		// Order parties reference
+		if (info?.OrderPartyReferences != null)
         {
-            cancelRequest.BuyerIdRef = info.OrderPartiesReference.BuyerIdRef;
-            cancelRequest.SupplierIdRef = info.OrderPartiesReference.SupplierIdRef;
+            cancelRequest.BuyerIdRef = info.OrderPartyReferences.BuyerReferenceId;
+            cancelRequest.SupplierIdRef = info.OrderPartyReferences.SupplierReferenceId;
         }
 
         // Items to cancel
@@ -52,9 +68,9 @@ public class CancelRequestBuilder : IEntityBuilder
                 var cancelItem = new CancelRequestItem
                 {
                     LineItemId = item.LineItemId,
-                    ProductId = item.ProductId?.SupplierPid?.Value,
-                    InternationalId = item.ProductId?.InternationalPid?.Value,
-                    BuyerId = item.ProductId?.BuyerPid?.Value,
+                    ProductId = item.ProductDetails?.SupplierProductId?.Value,
+                    InternationalId = item.ProductDetails?.InternationalProductId?.Value,
+                    BuyerId = item.ProductDetails?.BuyerProductId?.Value,
                     Quantity = item.Quantity ?? 0m,
                     OrderUnit = item.OrderUnit ?? "C62"
                 };
@@ -63,35 +79,35 @@ public class CancelRequestBuilder : IEntityBuilder
             }
         }
 
-        cancelRequest.TotalItemNum = document.Summary?.TotalItemNum ?? 0;
+        cancelRequest.TotalItemNum = document.Summary?.TotalItemCount ?? 0;
 
         return cancelRequest;
     }
 
-    private Party MapParty(DocumentParty p)
+    private Party MapParty(Parties p)
     {
         var addr = p.Address;
         return new Party
         {
-            PartyHeaders =p.PartyIds.Select(z=>new PartyHeader() { PartyType=z.Type,PartyValue=z.Value}).ToList(),
-            PartyRole=p.PartyRole,
+            PartyHeaders =p.PartyList.Select(z=>new PartyHeader() { PartyType=z.PartyIdType,PartyValue=z.PartyIdValue}).ToList(),
+            PartyRole=p.Role,
             PartyData = new PartyData
             {
                 Name = addr?.Name,
-                Name2 = addr?.Name2,
-                Name3 = addr?.Name3,
+                Name2 = addr?.NameLine2,
+                Name3 = addr?.NameLine3,
                 Department = addr?.Department,
-                Title = addr?.ContactDetails?.Title,
-                FirstName = addr?.ContactDetails?.FirstName,
-                ContactName = addr?.ContactDetails?.ContactName,
+                Title = addr?.Contact?.Title,
+                FirstName = addr?.Contact?.FirstName,
+                ContactName = addr?.Contact?.LastName,
                 Street = addr?.Street,
-                Zip = addr?.Zip,
-                BoxNo = addr?.BoxNo,
+                Zip = addr?.PostalCode,
+                BoxNo = addr?.PoBoxNumber,
                 City = addr?.City,
-                CountryCode = addr?.CountryCoded,
+                CountryCode = addr?.CountryCode,
                 Country = addr?.Country,
-                Email = addr?.Email,
-                Phone = addr?.Phone
+                Email = addr?.EmailAddress,
+                Phone = addr?.PhoneNumber
             }
         };
     }

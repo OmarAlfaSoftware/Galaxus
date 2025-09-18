@@ -7,8 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Use Cases\**" />
+    <EmbeddedResource Remove="Use Cases\**" />
+    <None Remove="Use Cases\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\Orders\" />
+    <Folder Include="Commands\Products\" />
     <Folder Include="DTOs\Shared\" />
-    <Folder Include="Use Cases\" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 
   <ItemGroup>

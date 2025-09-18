@@ -24,11 +24,11 @@ public class DispatchNotificationProcessor : IDocumentProcessor
         _logger = logger;
     }
 
-    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDTO document)
+    public async Task<ProcessingResult> ProcessAsync(UnifiedDocumentDto document)
     {
         try
         {
-            _logger.LogInformation($"Processing dispatch notification: {document.Header?.Info?.DispatchNotificationId}");
+            _logger.LogInformation($"Processing dispatch notification: {document.Header?.Metadata?.DispatchNotificationId}");
 
             var strategy = _entityBuilderStrategy.GetStrategy(DocumentType.DISPATCH_NOTIFICATION);
             var dispatchObject = await strategy.Build(document);

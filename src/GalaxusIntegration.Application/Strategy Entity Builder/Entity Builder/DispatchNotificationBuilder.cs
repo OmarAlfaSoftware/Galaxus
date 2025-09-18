@@ -7,34 +7,54 @@ namespace GalaxusIntegration.Application.Strategy_Builder.Entity_Builder;
 
 public class DispatchNotificationBuilder : IEntityBuilder
 {
-    public async Task<object> Build(UnifiedDocumentDTO document)
+    public async Task<object> Build(UnifiedDocumentDto document)
     {
         if (document == null) throw new ArgumentNullException(nameof(document));
 
         var dispatch = new DispatchNotification();
 
         var header = document.Header;
-        var info = header?.Info;
+        var info = header?.Metadata;
 
         // Basic info
         dispatch.DispatchNotificationId = info?.DispatchNotificationId ?? GenerateDispatchId();
         dispatch.DispatchNotificationDate = info?.DocumentDate ?? DateTime.UtcNow;
         dispatch.GenerationDate = header?.ControlInfo?.GenerationDate ?? DateTime.UtcNow;
+        dispatch.Parties = new();
+       
 
         // Delivery party
-        if (info?.Parties?.PartyList != null)
+        foreach (DTOs.Internal.Parties party in info?.Parties)
         {
-            var deliveryParty = info.Parties.PartyList
-                .FirstOrDefault(p => p.PartyRole?.ToLower() == "delivery");
-
-            if (deliveryParty != null)
+            var invoiceParty = new Core.Entities.Party();
+            invoiceParty.PartyRole = party.Role;
+            invoiceParty.PartyHeaders = party.PartyList.Select(z => new PartyHeader() { PartyValue = z.PartyIdValue, PartyType = z.PartyIdType }).ToList();
+            var address = party.Address;
+            invoiceParty.PartyData = new()
             {
-                dispatch.DeliveryAddress = MapDeliveryAddress(deliveryParty);
-            }
+                Name = address.Name,
+                Name2 = address.NameLine2,
+                Name3 = address.NameLine3,
+                BoxNo = address.PoBoxNumber,
+                City = address.City,
+                ContactName = address.Contact.LastName,
+                Country = address.Country,
+                CountryCode = address.CountryCode,
+                Department = address.Department,
+                Email = address.EmailAddress,
+                FirstName = address.Contact.FirstName,
+                Phone = address.PhoneNumber,
+                Street = address.Street,
+                Title = address.Contact.Title,
+                VatId = address.VatIdentificationNumber,
+                Zip = address.PostalCode,
+            };
+
+            dispatch.Parties.Add(invoiceParty);
         }
 
         // Shipment info
-        dispatch.ShipmentId = info?.InfoId;
+        dispatch.ShipmentId = info?.DeliveryNoteId;
         dispatch.ShipmentCarrier = MapShipmentCarrier(info?.ShipmentCarrier);
 
         // Dispatch items
@@ -47,18 +67,20 @@ public class DispatchNotificationBuilder : IEntityBuilder
 
                 var dispatchItem = new DispatchItem
                 {
-                    ProductId = item.ProductId?.SupplierPid?.Value,
-                    InternationalId = item.ProductId?.InternationalPid?.Value,
-                    BuyerId = item.ProductId?.BuyerPid?.Value,
+                    ProductId = item.ProductDetails?.SupplierProductId?.Value,
+                    InternationalId = item.ProductDetails?.InternationalProductId?.Value,
+                    BuyerId = item.ProductDetails?.BuyerProductId?.Value,
                     Quantity = item.Quantity ?? 0m,
-                    OrderId = item.OrderId,
-                    SerialNumbers = item.ProductId?.SerialNumbers ?? new List<string>()
+                    OrderId = item.ReferencedOrderId,
+                    SerialNumbers = item.SerialNumbers ?? new List<string>()
                 };
 
                 // Logistic details (SSCC)
-                if (item.LogisticDetails != null)
+                if (item.LogisticsDetails != null)
                 {
-                    dispatchItem.LogisticDetails.Packages = item?.LogisticDetails.PackageInfo.Packages.Select(p => new Package() { PackageId = p.PackageId, PackageQuantity = p.Quantity }).ToList();
+                    dispatchItem.LogisticDetails = new();
+                    dispatchItem.LogisticDetails.Packages = new();
+                    dispatchItem.LogisticDetails.Packages =  item?.LogisticsDetails.PackageInformation.Packages.Select(p => new Package() { PackageId = p.PackageId, PackageQuantity = p.PackageQuantity }).ToList();
                 }
 
                 dispatch.DispatchItems.Add(dispatchItem);
@@ -87,23 +109,23 @@ public class DispatchNotificationBuilder : IEntityBuilder
         };
     }
 
-    private DeliveryAddress MapDeliveryAddress(DocumentParty party)
+    private DeliveryAddress MapDeliveryAddress(Address party)
     {
-        var addr = party.Address;
+        var addr = party;
         return new DeliveryAddress
         {
             Name = addr?.Name,
-            Name2 = addr?.Name2,
-            Name3 = addr?.Name3,
+            Name2 = addr?.NameLine2,
+            Name3 = addr?.NameLine3,
             Department = addr?.Department,
-            ContactFirstName = addr?.ContactDetails?.FirstName,
-            ContactLastName = addr?.ContactDetails?.ContactName,
+            ContactFirstName = addr?.Contact?.FirstName,
+            ContactLastName = addr?.Contact?.LastName,
             Street = addr?.Street,
-            Zip = addr?.Zip,
-            BoxNo = addr?.BoxNo,
+            Zip = addr?.PostalCode,
+            BoxNo = addr?.PoBoxNumber,
             City = addr?.City,
             Country = addr?.Country,
-            CountryCode = addr?.CountryCoded
+            CountryCode = addr?.CountryCode
         };
     }
 }

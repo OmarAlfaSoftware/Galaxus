@@ -6,7 +6,7 @@ namespace GalaxusIntegration.Application.Interfaces;
 
 public interface IEntityBuilder
 {
-    Task<object> Build(UnifiedDocumentDTO document);
+    Task<object> Build(UnifiedDocumentDto document);
 
 }
 

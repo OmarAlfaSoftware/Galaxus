@@ -15,10 +15,10 @@ public class UnifiedReturnProcessor : IUnifiedDocumentProcessor
 
     public bool CanProcess(DocumentType type) => type == DocumentType.RETURN_REGISTRATION;
 
-    public Task<ProcessingResult> ProcessAsync(UnifiedDocumentDTO document)
+    public Task<ProcessingResult> ProcessAsync(UnifiedDocumentDto document)
     {
-        var returnId = document.Header?.Info?.ReturnRegistrationId;
-        var orderId = document.Header?.Info?.OrderId;
+        var returnId = document.Header?.Metadata?.ReturnRegistrationId;
+        var orderId = document.Header?.Metadata.OrderId;
         var itemCount = document.ItemList?.Items?.Count ?? 0;
         _logger.LogInformation("Processed RETURNREGISTRATION {ReturnId} for order {OrderId}", returnId, orderId);
         return Task.FromResult(new ProcessingResult

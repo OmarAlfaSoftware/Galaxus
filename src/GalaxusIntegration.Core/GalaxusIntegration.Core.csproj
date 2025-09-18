@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain logic\" />
-    <Folder Include="Buisness Rules\" />
+    <Compile Remove="Buisness Rules\**" />
+    <Compile Remove="Domain logic\**" />
+    <EmbeddedResource Remove="Buisness Rules\**" />
+    <EmbeddedResource Remove="Domain logic\**" />
+    <None Remove="Buisness Rules\**" />
+    <None Remove="Domain logic\**" />
   </ItemGroup>
 
   <ItemGroup>
